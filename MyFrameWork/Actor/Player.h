@@ -22,10 +22,23 @@ public:
 	}
 	void OnUpdate(float deltaTime) override {
 		mAnimTime += deltaTime;
+		if (mAnimTime >= mAnimation.endFrame())
+			mAnimTime = 0.0f;
 		mSkinnedMesh.caluclate(GetPose(), mAnimTime);
 	}
 	void OnDraw() const override {
 		mSkinnedMesh.draw(*mShader);
+	}
+	void TempDraw(Matrix world, Matrix view, Matrix projection, Light light) const {
+		mShader->world(world);
+		mShader->view(view);
+		mShader->projection(projection);
+		mShader->light(light);
+
+		mSkinnedMesh.draw(*mShader);
+	}
+	void SetShader(SkinnedMeshShader* shader) {
+		mShader = shader;
 	}
 private:
 	// メッシュクラス

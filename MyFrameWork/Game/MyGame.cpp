@@ -10,7 +10,7 @@
 
 MyGame::MyGame()
 	: gslib::Game()
-	, m_isEnd(false)	
+	, m_isEnd(false)
 {
 }
 
@@ -37,6 +37,9 @@ void MyGame::start()
 	effect2_ = new EffectGL("asset/shader/skinned_mesh_normal.vert", "asset/shader/skinned_mesh_normal.frag");
 	skinnedMesh_ = new SkinnedMesh(mesh_, skeleton_, animation_);
 	shader = new SkinnedMeshShader(*effect1_);
+
+	mPlayer.SetShader(shader);
+	mChar.SetShader(shader);	
 }
 
 
@@ -49,7 +52,10 @@ void MyGame::update(float deltaTime)
 
 	//シーン更新
 	m_SceneManager.Update(deltaTime);
-	
+
+	mPlayer.Update(deltaTime);
+	mChar.Update(deltaTime * 1.5f);
+
 	/*:::::::::::::::::::::::::::::::::::*/
 	skinnedMesh_->caluclate(Matrix::Identity, timer_);
 	timer_ = std::fmod(timer_ + deltaTime, animation_.endFrame());
@@ -70,8 +76,9 @@ void MyGame::draw()
 	/*:::::::::::::::::::::::::::::::::::::*/
 	glClearColor(0.5f, 0.5f, 1.0f, 1.0f);
 	Matrix world = Matrix::Identity;
-	Matrix view = Matrix::CreateLookAt({ 0.0f, 10.0f, 20.0f }, { 0.0f, 10.0f, 0.0f }, { 0.0f, 1.0f, 0.0f });
+	Matrix view = Matrix::CreateLookAt(mCameraPos, { 0.0f, 10.0f, 0.0f }, { 0.0f, 1.0f, 0.0f });
 	Matrix projection = Matrix::CreatePerspectiveFieldOfView(60.0f, 640.0f / 480.0f, 0.1f, 100.0f);
+
 
 	// ライトのパラメータ
 	Light light;
@@ -81,13 +88,31 @@ void MyGame::draw()
 	if (mKeyboard.IsAnyKeyState()) {
 		effect = effect2_;
 	}
-	
+
 	shader->world(world);
 	shader->view(view);
 	shader->projection(projection);
 	shader->light(light);
-	// メッシュの描画
-	skinnedMesh_->draw(*shader);
+
+	Vector3 charPos{ mChar.GetPosition() };
+	
+	if (mKeyboard.GetKeyState(VK_UP)) {
+		charPos.z -= 1;
+	}
+	if (mKeyboard.GetKeyState(VK_DOWN)) {
+		charPos.z += 1;
+	}
+	if (mKeyboard.GetKeyState(VK_LEFT)) {
+		charPos.x -= 1;
+	}
+	if (mKeyboard.GetKeyState(VK_RIGHT)) {
+		charPos.x += 1;
+	}
+	mChar.SetPosition(charPos);
+
+	//// メッシュの描画	
+	mPlayer.TempDraw(world, view, projection, light);
+	mChar.TempDraw(world, view, projection, light);
 
 	//フレーム固定
 	//Time::Wait();

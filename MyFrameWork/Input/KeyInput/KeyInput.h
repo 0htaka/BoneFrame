@@ -19,3 +19,4 @@ private:
 	Keys mCurKeys;   //キーの現在の押下状況保存
 	Keys mPreKeys;   //キーの1F前の押下状況保存
 };
+

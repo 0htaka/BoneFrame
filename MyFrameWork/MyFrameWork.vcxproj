@@ -199,6 +199,7 @@
     <ClInclude Include="Game\MyGame.h" />
     <ClInclude Include="Input\GamePad\XInput.h" />
     <ClInclude Include="Input\Input.h" />
+    <ClInclude Include="Input\KeyInput\KeyCode.h" />
     <ClInclude Include="Input\KeyInput\KeyInput.h" />
     <ClInclude Include="Math\Color.h" />
     <ClInclude Include="Math\MathHelper.h" />

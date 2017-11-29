@@ -1,6 +1,6 @@
 #include "KeyInput.h"
 #include<Windows.h>
-//#include<WinUser.h> // キーコードが載っている
+#include<WinUser.h> // キーコードが載っている
 
 KeyInput::KeyInput()
 {
