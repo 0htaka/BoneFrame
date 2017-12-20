@@ -104,7 +104,7 @@ private:
 
 	//衝突判定 それぞれ当たり判定が異なるので 押し出し処理があるので引数追加
 	virtual bool IsCollide(const Actor& other, HitInfo& info)const;
-protected:
+public:
 	//ワールド
 	IWorld*			m_world;
 	//名前

@@ -5,7 +5,7 @@
 #include"Math/MathHelper.h"
 #include"Math/Vector2.h"
 #include"KeyInput\KeyInput.h"
-
+#include<Windows.h>
 //ゲームパッドの入力マックス
 const int Max_Of_Num = 256;
 
@@ -35,7 +35,7 @@ private:
 	~Input();
 	void RegistFunc();
 public:
-	static Input& GetInstance();	
+	static Input& Ins();	
 
 	void Update();
 	bool GetCommand(Command command);

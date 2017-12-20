@@ -102,6 +102,7 @@ Matrix Actor::GetRotate() const
 void Actor::SetRotate(Matrix rotate)
 {
 	m_rotate = rotate;
+	m_rotate.NormalizeRotationMatrix();
 }
 //•ÏŠ·s—ñ‚ğ•Ô‚·
 Matrix Actor::GetPose() const

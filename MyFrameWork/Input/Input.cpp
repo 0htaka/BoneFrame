@@ -1,5 +1,4 @@
 #include"Input.h"
-#include<Windows.h>
 
 const short STICKEXCURSION = 30000; //スティックの値の最大値
 const short TRIGGEREXCURSION = 255; //トリガーの値の最大値
@@ -14,7 +13,7 @@ Input::Input()
 Input::~Input() {
 }
 
-Input & Input::GetInstance() {
+Input & Input::Ins() {
 	static Input instance;
 	return instance;
 }

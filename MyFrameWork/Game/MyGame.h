@@ -14,6 +14,7 @@
 #include"Input\KeyInput\KeyInput.h"
 
 #include"Actor\Player.h"
+#include"Actor\Base\Camera\Camera.h"
 
 class MyGame : public gslib::Game {
 public:
@@ -28,13 +29,11 @@ public:
 	void end() override;
 private:	
 	bool m_isEnd{ false };
-	SceneManager m_SceneManager;
-	KeyInput mKeyboard;
+	SceneManager m_SceneManager;	
 
 	Player mPlayer;
 	Player mChar;
-
-	Vector3 mCameraPos{ 0.0f, 10.0f, 20.0f };
+	Camera mCamera;
 
 	//**********************************************
 	// エフェクト

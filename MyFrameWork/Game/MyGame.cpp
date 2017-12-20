@@ -39,10 +39,10 @@ void MyGame::start()
 	shader = new SkinnedMeshShader(*effect1_);
 
 	mPlayer.SetShader(shader);
-	mChar.SetShader(shader);	
+	mChar.SetShader(shader);
+	mCamera.SetPosition({ 0.0f,15.0f, 40.0f });
+	mCamera.SetRotate(mCamera.GetRotate().Forward(mPlayer.GetPosition() + Vector3{ 0, 10, 0 } - mCamera.GetPosition()));
 }
-
-
 
 void MyGame::update(float deltaTime)
 {
@@ -55,15 +55,15 @@ void MyGame::update(float deltaTime)
 
 	mPlayer.Update(deltaTime);
 	mChar.Update(deltaTime * 1.5f);
+	mCamera.Update(deltaTime);
 
 	/*:::::::::::::::::::::::::::::::::::*/
 	skinnedMesh_->caluclate(Matrix::Identity, timer_);
 	timer_ = std::fmod(timer_ + deltaTime, animation_.endFrame());
 
-	mKeyboard.Update();
+	Input::Ins().Update();
 }
 
-bool temp = false;
 void MyGame::draw()
 {
 	//デバッグ用描画
@@ -72,11 +72,11 @@ void MyGame::draw()
 	//シーン描画
 	m_SceneManager.Draw();
 
-
 	/*:::::::::::::::::::::::::::::::::::::*/
 	glClearColor(0.5f, 0.5f, 1.0f, 1.0f);
 	Matrix world = Matrix::Identity;
-	Matrix view = Matrix::CreateLookAt(mCameraPos, { 0.0f, 10.0f, 0.0f }, { 0.0f, 1.0f, 0.0f });
+	Matrix CameraMat = mCamera.GetPose();
+	Matrix view = Matrix::CreateLookAt(CameraMat.Translation(), CameraMat.Translation() + CameraMat.Forward(), CameraMat.Up());
 	Matrix projection = Matrix::CreatePerspectiveFieldOfView(60.0f, 640.0f / 480.0f, 0.1f, 100.0f);
 
 
@@ -85,30 +85,11 @@ void MyGame::draw()
 	light.position = { 100.0f, 100.0f, 100.0f };
 
 	EffectGL* effect = effect1_;
-	if (mKeyboard.IsAnyKeyState()) {
-		effect = effect2_;
-	}
 
 	shader->world(world);
 	shader->view(view);
 	shader->projection(projection);
 	shader->light(light);
-
-	Vector3 charPos{ mChar.GetPosition() };
-	
-	if (mKeyboard.GetKeyState(VK_UP)) {
-		charPos.z -= 1;
-	}
-	if (mKeyboard.GetKeyState(VK_DOWN)) {
-		charPos.z += 1;
-	}
-	if (mKeyboard.GetKeyState(VK_LEFT)) {
-		charPos.x -= 1;
-	}
-	if (mKeyboard.GetKeyState(VK_RIGHT)) {
-		charPos.x += 1;
-	}
-	mChar.SetPosition(charPos);
 
 	//// メッシュの描画	
 	mPlayer.TempDraw(world, view, projection, light);

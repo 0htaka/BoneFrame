@@ -250,6 +250,7 @@ Matrix& Matrix::Forward(const Vector3 & forward) {
 	m[2][0] = forward.x;
 	m[2][1] = forward.y;
 	m[2][2] = forward.z;
+	NormalizeRotationMatrix();
 	return *this;
 }
 
@@ -269,6 +270,7 @@ Matrix& Matrix::Up(const Vector3 & up) {
 	m[1][0] = up.x;
 	m[1][1] = up.y;
 	m[1][2] = up.z;
+	NormalizeRotationMatrix();
 	return *this;
 }
 
@@ -288,6 +290,7 @@ Matrix& Matrix::Left(const Vector3 & left) {
 	m[0][0] = left.x;
 	m[0][1] = left.y;
 	m[0][2] = left.z;
+	NormalizeRotationMatrix();
 	return *this;
 }
 
