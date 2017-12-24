@@ -153,7 +153,9 @@
     <ClCompile Include="src\Actor\Base\Actor.cpp" />
     <ClCompile Include="src\Actor\Base\ActorManager.cpp" />
     <ClCompile Include="src\Actor\Base\Camera\Camera.cpp" />
+    <ClCompile Include="src\Actor\Base\World.cpp" />
     <ClCompile Include="src\Actor\Components\SceneComp.cpp" />
+    <ClCompile Include="src\Actor\Player.cpp" />
     <ClCompile Include="src\AssetManager\AnimManager.cpp" />
     <ClCompile Include="src\AssetManager\Base\LoadManager.cpp" />
     <ClCompile Include="src\AssetManager\MeshManager.cpp" />
@@ -192,6 +194,7 @@
     <ClInclude Include="src\Actor\Base\Camera\Camera.h" />
     <ClInclude Include="src\Actor\Base\EventMessage.h" />
     <ClInclude Include="src\Actor\Base\IWorld.h" />
+    <ClInclude Include="src\Actor\Base\World.h" />
     <ClInclude Include="src\Actor\Components\CompManager.h" />
     <ClInclude Include="src\Actor\Components\ComponentBase.h" />
     <ClInclude Include="src\Actor\Components\ComponentBasePtr.h" />
