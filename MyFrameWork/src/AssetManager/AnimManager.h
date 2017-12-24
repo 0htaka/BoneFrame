@@ -1,10 +1,12 @@
 #pragma once
 
-#include "Base/AssetManagerBase.h"
+#include "Base/LoadablesManager.h"
 #include "Render/Animation.h"
 #include <string>
 
-class AnimManager : public AssetManagerBase<AnimManager, Animation> {
+//using AnimManager = LoadablesManager<AnimManager, Animation>;
+
+class AnimManager : public LoadablesManager<AnimManager, Animation> {
 //protected:
 //	void OnLoad(const std::string& filePath) override;
 };

@@ -1,9 +1,9 @@
 #pragma once
 
-#include "Base/AssetManagerBase.h"
+#include "Base/LoadablesManager.h"
 #include "Render/Mesh.h"
 #include <string>
 
-class MeshManager : public AssetManagerBase<MeshManager, Mesh> {
+class MeshManager : public LoadablesManager<MeshManager, Mesh> {
 
 };

@@ -1,6 +1,6 @@
 #pragma once
 
-#include"Design/Singleton.h"
+#include"IAssetManager.h"
 #include"ILoadable.h"
 #include <unordered_map>
 #include <filesystem>
@@ -8,26 +8,26 @@
 #include <mutex>
 
 template<typename Manager, typename Asset>
-class AssetManagerBase : public Singleton<Manager> , public ILoadable {
+class LoadablesManager : public IAssetManager<Manager, Asset>, public ILoadable {
 public:
 	void Load(const std::string& filePath) override {
-		std::lock_guard<std::mutex> lock(mMutex);		
+		std::lock_guard<std::mutex> lock(mMutex);
 		OnLoad(filePath);
 	}
-	Asset& Get(const std::string& name) {
+	Asset& Get(const std::string& name) override {
 		std::lock_guard<std::mutex> lock(mMutex);
 		return mAssets[name];
 	}
-	void Remove(const std::string& name) {
+	void Remove(const std::string& name) override {
 		std::lock_guard<std::mutex> lock(mMutex);
 		mAssets.erase(name);
 	}
-	void Clear() {
+	void Clear() override {
 		std::lock_guard<std::mutex> lock(mMutex);
 		mAssets.clear();
 	}
 
-	std::string GetFileName(std::string filePath) {
+	std::string GetFileName(std::string filePath) const {
 		std::tr2::sys::path path(filePath);
 		std::string fileNmae(path.filename().string());
 		return fileNmae.erase(fileNmae.find_last_of('.'));

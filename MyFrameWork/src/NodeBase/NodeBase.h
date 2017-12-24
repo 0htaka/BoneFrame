@@ -5,14 +5,16 @@
 
 #include"NodePtr.h"
 
+enum class EventMessage;
+
 using NodeList = std::forward_list<NodeSPtr>;
 class NodeBase
 {	
 public:
 	NodeBase();
-	~NodeBase();	
+	virtual ~NodeBase() {}
 	//アップデート（自身、子供）
-	void Update();
+	void Update(float deltaTime);
 
 	//子の追加
 	void AddChild(const NodeSPtr& child);
@@ -27,15 +29,18 @@ public:
 	//子を削除する
 	void RemoveChildren(std::function<bool(NodeBase&)>fn);
 	//子を削除する
-	void RemoveChildren();
+	void RemoveDead();
 	//子を強制削除する
 	void ClearChildren();
 	//子の検索
 	NodeSPtr FindNode(std::function<bool(const NodeBase&)>fn);
 	//NodeList FindNodes(std::function<bool(const NodeBase&)>fn);
 
+	//メッセージ処理
+	void HandleMessage(EventMessage message, void* param);
+
 protected:
-	virtual void OnUpdate() {}
+	virtual void OnUpdate(float deltaTime) {}
 private:
 	NodeList mChildren;
 	bool mIsDead;

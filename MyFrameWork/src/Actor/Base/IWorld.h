@@ -16,17 +16,18 @@ public:
 	//仮想デストラクタ
 	virtual ~IWorld(){}
 	//アクターの追加
-	virtual void AddActor(ActorGroup group, const ActorSPtr& actor) = 0;
-	//virtual void AddField(std::shared_ptr<Field> field) = 0;
+	virtual void AddActor(const ActorSPtr& actor) = 0;	
 	//アクターの検索
 	virtual ActorSPtr FindActor(const std::string& name) = 0;
-	//virtual std::shared_ptr<Field> GetField() const = 0;
-	virtual std::shared_ptr<Camera> GetCamera() const = 0;
-	//メッセージの送信
-	virtual void MessageSend(EventMessage message, void* param = nullptr) = 0;
 	
-	virtual std::vector<ActorSPtr> FindActors(const ActorGroup& group) = 0;
+	//メッセージの送信
+	virtual void Message(EventMessage message, void* param = nullptr) = 0;
+	
+	//virtual std::vector<ActorSPtr> FindActors(const ActorGroup& group) = 0;
 
+	//virtual void AddField(std::shared_ptr<Field> field) = 0;
+	//virtual std::shared_ptr<Field> GetField() const = 0;
+	//virtual std::shared_ptr<Camera> GetCamera() const = 0;
 	//virtual std::shared_ptr<SpriteManager> GetSpriteManager() const = 0;
 };
 

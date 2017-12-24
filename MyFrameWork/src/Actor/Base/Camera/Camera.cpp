@@ -17,16 +17,9 @@ void Camera::OnUpdate(float deltaTime)
 {
 	
 }
-void Camera::OnDraw()const
-{	
-}
 
 bool Camera::IsView(const Vector3& position, const float& angle)
 {	
 	return false;
 }
 
-void Camera::OnCollide(Actor & other, const HitInfo & info)
-{
-
-}

@@ -1,17 +1,14 @@
 #include "NodeBase.h"
 #include <algorithm>
 
-NodeBase::NodeBase()
+NodeBase::NodeBase() : mIsDead(false)
 {
 }
 
-NodeBase::~NodeBase()
+void NodeBase::Update(float deltaTime)
 {
-}
-
-void NodeBase::Update()
-{
-
+	OnUpdate(deltaTime);
+	EachChildren([&](NodeBase& actor) {actor.Update(deltaTime); });
 }
 
 void NodeBase::AddChild(const NodeSPtr & child)
@@ -46,10 +43,10 @@ void NodeBase::RemoveChildren(std::function<bool(NodeBase&)> fn)
 	mChildren.remove_if([&](NodeSPtr& node) {return fn(*node); });
 }
 
-void NodeBase::RemoveChildren()
+void NodeBase::RemoveDead()
 {
 	RemoveChildren([](NodeBase& node) { return node.IsDead(); });
-	EachChildren([](NodeBase& node) {node.RemoveChildren(); });
+	EachChildren([](NodeBase& node) {node.RemoveDead(); });
 }
 
 void NodeBase::ClearChildren()
@@ -88,3 +85,9 @@ NodeSPtr NodeBase::FindNode(std::function<bool(const NodeBase&)> fn)
 //
 //	return list;
 //}
+
+//メッセージ処理
+void NodeBase::HandleMessage(EventMessage message, void* param)
+{
+
+}

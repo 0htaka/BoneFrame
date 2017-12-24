@@ -15,6 +15,7 @@
 
 #include"Actor\Player.h"
 #include"Actor\Base\Camera\Camera.h"
+#include"Actor/Base/World.h"
 
 class MyGame : public gslib::Game {
 public:
@@ -27,26 +28,19 @@ public:
 	void draw() override;
 	// 終了
 	void end() override;
-private:	
+private:
 	bool m_isEnd{ false };
-	SceneManager m_SceneManager;	
+	SceneManager m_SceneManager;
+	World mWorld;
 
-	Player mPlayer;
-	Player mChar;
-	Camera mCamera;
+	std::shared_ptr<Camera> camera;
+	std::shared_ptr<Player> player;
 
 	//**********************************************
 	// エフェクト
 	EffectGL*		effect1_;
 	EffectGL*		effect2_;
-	// メッシュクラス
-	Mesh*			mesh_;
-	// スケルトンクラス
-	Skeleton*		skeleton_;
-	// アニメーションクラス
-	Animation*		animation_;
-	// スキニングメッシュクラス
-	SkinnedMesh*	skinnedMesh_;
+	
 	SkinnedMeshShader* shader;
 
 	// アニメーションタイマ

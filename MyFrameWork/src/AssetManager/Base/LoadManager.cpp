@@ -1,7 +1,8 @@
 #include "LoadManager.h"
+#include"AssetManager.h"
 
 void LoadManager::Request(const std::string& filePath) {
-	auto& manager = GetLoadableManager(GetExtension(filePath));
+	auto& manager = GetLoadablesManager(GetExtension(filePath));
 	mRequests.emplace(manager, filePath);
 }
 
@@ -25,15 +26,15 @@ bool LoadManager::IsComplete()
 	return !mThread.joinable();
 }
 
-ILoadable & LoadManager::GetLoadableManager(const std::string& extension) {
+ILoadable & LoadManager::GetLoadablesManager(const std::string& extension) {
 	if (extension == ".mshs")
 		return MeshManager::Ins();
 	if (extension == ".anms")
 		return AnimManager::Ins();
 	if (extension == ".skls")
 		return SkeletonManager::Ins();
-
-	MeshManager::Ins();
+	//if (extension == ".skls")
+	//	return SkeletonManager::Ins();
 }
 
 std::string LoadManager::GetExtension(const std::string & filePath)

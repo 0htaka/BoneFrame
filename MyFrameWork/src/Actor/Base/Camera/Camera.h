@@ -10,7 +10,6 @@ public:
 	Camera();
 
 	void OnUpdate(float deltaTime) override;
-	void OnDraw()const override;
 	void Move(
 		const Vector3& restPosition,	//バネの静止位置
 		float stiffness,				//バネ定数（バネの強さ）
@@ -21,8 +20,6 @@ public:
 	///<param name ='position'>判定するオブジェクトの位置</param>
 	///<param name ='angle'>視野内からどれくらいまでを許容するか</param>
 	bool IsView(const Vector3& position, const float& angle = 0.0f);
-private:
-	virtual void OnCollide(Actor& other, const HitInfo& info) override;
 private:
 
 };

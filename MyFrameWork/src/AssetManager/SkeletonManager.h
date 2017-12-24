@@ -1,10 +1,10 @@
 #pragma once
 
-#include "Base/AssetManagerBase.h"
+#include "Base/LoadablesManager.h"
 #include "Render/Skeleton.h"
 #include <string>
 
 
-class SkeletonManager : public AssetManagerBase<SkeletonManager, Skeleton> {
+class SkeletonManager : public LoadablesManager<SkeletonManager, Skeleton> {
 
 };

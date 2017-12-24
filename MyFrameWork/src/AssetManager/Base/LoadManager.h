@@ -28,7 +28,7 @@ public:
 	//Hƒ[ƒhŠ®—¹
 	bool IsComplete();
 private:
-	ILoadable& GetLoadableManager(const std::string& extension);
+	ILoadable& GetLoadablesManager(const std::string& extension);
 	std::string GetExtension(const std::string& filePath);
 private:
 	std::queue<Item> mRequests;
