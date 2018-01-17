@@ -8,16 +8,19 @@
 
 #include"Scene\TestScene.h"
 
-#include"AssetManager/Base/LoadManager.h"
+#include"Load\LoadManager.h"
 #include"AssetManager\Base\AssetManager.h"
+#include"AssetManager\GLSLFragManager.h"
+#include"AssetManager\GLSLVertManager.h"
+
+//using EffectGLManager = AssetManager<EffectGL*>;
+//class EffectGLManager : public AssetManager<EffectGL*> {};
 
 MyGame::MyGame()
 	: gslib::Game()
 	, m_isEnd(false)
 {
 }
-
-
 
 void MyGame::start()
 {
@@ -34,6 +37,9 @@ void MyGame::start()
 	// deltaTime ‚ğŠÇ—‚·‚éƒNƒ‰ƒX‚Ì‰Šú‰»
 	Time::Init();
 
+	AssetManagerMap<int> temp;
+	temp.Clear();
+
 	/*:::::::::::::::::::::::::::::::::::::::::::::*/
 	LoadManager::Ins().Request("asset/model/Soldier.mshs");
 	LoadManager::Ins().Request("asset/model/Y_Bot@jump.anms");
@@ -44,7 +50,9 @@ void MyGame::start()
 		if (LoadManager::Ins().IsComplete())
 			break;
 	}
+	//EffectGLManager::Ins().Clear();
 
+	//GLSLFragManager::Ins().
 	effect1_ = new EffectGL("asset/shader/skinned_mesh.vert", "asset/shader/skinned_mesh.frag");
 	effect2_ = new EffectGL("asset/shader/skinned_mesh_normal.vert", "asset/shader/skinned_mesh_normal.frag");
 	shader = new SkinnedMeshShader(*effect2_);

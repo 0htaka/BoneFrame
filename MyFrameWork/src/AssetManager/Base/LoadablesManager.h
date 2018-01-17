@@ -1,7 +1,7 @@
 #pragma once
 
-#include"IAssetManager.h"
-#include"ILoadable.h"
+#include "IAssetManager.h"
+#include "Load/ILoadable.h"
 #include <unordered_map>
 #include <filesystem>
 #include <string>
@@ -9,6 +9,7 @@
 
 template<typename Manager, typename Asset>
 class LoadablesManager : public IAssetManager<Manager, Asset>, public ILoadable {
+	using Super = IAssetManager<Manager, Asset>;
 public:
 	void Load(const std::string& filePath) override {
 		std::lock_guard<std::mutex> lock(mMutex);
@@ -16,7 +17,7 @@ public:
 	}
 	Asset& Get(const std::string& name) override {
 		std::lock_guard<std::mutex> lock(mMutex);
-		return mAssets[name];
+		return mAssets.at(name);
 	}
 	void Remove(const std::string& name) override {
 		std::lock_guard<std::mutex> lock(mMutex);
@@ -27,18 +28,17 @@ public:
 		mAssets.clear();
 	}
 
-	std::string GetFileName(std::string filePath) const {
+	std::string GetFileName(const std::string& filePath) const {
 		std::tr2::sys::path path(filePath);
 		std::string fileNmae(path.filename().string());
 		return fileNmae.erase(fileNmae.find_last_of('.'));
 	}
 protected:
 	virtual void OnLoad(const std::string& filePath) {
-		Asset asset;
-		asset.Load(filePath);
-		mAssets.emplace(GetFileName(filePath), std::move(asset));
+		mAssets.emplace(GetFileName(filePath), Asset(filePath));
 	}
 protected:
 	std::unordered_map<std::string, Asset> mAssets;
 	std::mutex mMutex;
 };
+

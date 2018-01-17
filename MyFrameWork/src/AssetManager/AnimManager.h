@@ -4,9 +4,12 @@
 #include "Render/Animation.h"
 #include <string>
 
-//using AnimManager = LoadablesManager<AnimManager, Animation>;
-
 class AnimManager : public LoadablesManager<AnimManager, Animation> {
-//protected:
-//	void OnLoad(const std::string& filePath) override;
+	//protected:
+	//	void OnLoad(const std::string& filePath) override;
 };
+
+template<>
+void LoadablesManager<AnimManager, Animation>::OnLoad(const std::string& filePath) {
+	mAssets.emplace(GetFileName(filePath), Animation(filePath));
+}

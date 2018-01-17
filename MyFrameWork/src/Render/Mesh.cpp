@@ -4,6 +4,10 @@
 #include <vector>
 #include <filesystem>
 
+Mesh::Mesh(const std::string & filePath) {
+	Load(filePath);
+}
+
 // デストラクタ
 Mesh::~Mesh() {
 	Clear();

@@ -2,7 +2,7 @@
 #ifndef ANIMATION_H_
 #define	ANIMATION_H_
 
-#include"AssetManager/Base/ILoadable.h"
+#include"Load\ILoadable.h"
 
 #include <vector>
 #include <unordered_map>
@@ -12,7 +12,7 @@
 #include "Math/Quaternion.h"
 
 // アニメーションクラス
-class Animation : public ILoadable {
+class Animation {
 public:
 	struct KeyFrame {					// キーフレーム構造体
 		float		frameNo;			// フレーム番号
@@ -24,12 +24,13 @@ public:
 public:
 	// コンストラクタ
 	Animation();
+	Animation(const std::string& filePath);
 	// キーフレームの取得
 	KeyFrame GetKeyFrame(const std::string& boneName, float frameNo) const;
 	// 消去
 	void Clear();
 	// ファイルから読み込む
-	void Load(const std::string& fileName) override;
+	void Load(const std::string& fileName);
 	// 終了フレーム数を返す
 	float EndFrame() const;
 private:

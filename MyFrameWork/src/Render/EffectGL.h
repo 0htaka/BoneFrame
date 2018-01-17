@@ -9,6 +9,7 @@
 #include "Math/Color.h"
 #include "Math/Matrix.h"
 
+//プログラム側とシェーダ側のパラメータ等の連携を図るクラス
 class EffectGL {
 public:
 	// コンストラクタ

@@ -1,7 +1,7 @@
 #ifndef SKELETON_H_
 #define SKELETON_H_
 
-#include "AssetManager/Base/ILoadable.h"
+#include"Load\ILoadable.h"
 
 #include <string>
 #include <vector>
@@ -9,7 +9,7 @@
 
 class Animation;
 
-class Skeleton : public ILoadable {
+class Skeleton {
 public:
 	struct Bone {
 		char			name[32];	// ボーン名
@@ -22,6 +22,7 @@ public:
 public:
 	// コンストラクタ
 	Skeleton();
+	Skeleton(const std::string& filePath);
 	// ボーン数を返す
 	std::size_t Size() const;
 	// ボーンのローカル変換行列を計算する
@@ -33,7 +34,7 @@ public:
 	// 消去
 	void Clear();
 	// ファイル読み込み
-	void Load(const std::string& fileName) override;
+	void Load(const std::string& fileName);
 private:
 	// ボーン配列
 	std::vector<Bone>	bones_;

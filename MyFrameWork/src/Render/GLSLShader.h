@@ -1,6 +1,7 @@
 #ifndef GLSL_SHADER_H_
 #define GLSL_SHADER_H_
 
+#include "Load\ILoadable.h"
 #include <opengl_ext.h>
 #include <string>
 #include <vector>
@@ -9,7 +10,7 @@
 class GLSLShader {
 public:
 	// コンストラクタ
-	GLSLShader(GLenum type, const std::string& fileName);
+	GLSLShader(GLenum type, const std::string& filePath);
 	// デストラクタ
 	~GLSLShader();
 	// シェーダータイプの取得

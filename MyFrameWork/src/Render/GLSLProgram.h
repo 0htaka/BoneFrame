@@ -4,6 +4,7 @@
 #include <opengl_ext.h>
 #include <string>
 
+//バーテックス、ピクセルシェーダをコンパイル、リンクするし管理するクラス
 class GLSLProgram {
 public:
 	// コンストラクタ

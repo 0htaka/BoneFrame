@@ -5,10 +5,10 @@
 #include <vector>
 #include <stdexcept>
 
-GLSLShader::GLSLShader(GLenum type, const std::string & fileName) :
+GLSLShader::GLSLShader(GLenum type, const std::string & filePath) :
 	type_(type), shader_(0) {
 	shader_ = glCreateShader(type);
-	compile(fileName);
+	compile(filePath);
 }
 
 GLSLShader::~GLSLShader() {

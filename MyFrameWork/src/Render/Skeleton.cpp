@@ -5,6 +5,10 @@
 Skeleton::Skeleton() {
 }
 
+Skeleton::Skeleton(const std::string & filePath) {
+	Load(filePath);
+}
+
 std::size_t Skeleton::Size() const {
 	return bones_.size();
 }
@@ -43,7 +47,7 @@ void Skeleton::Load(const std::string & fileName)
 		throw std::runtime_error("can not open " + fileName);
 	}
 	Clear();
-	unsigned int skeleton_size = 0;
+	unsigned int skeleton_size = 0;	
 	file.read((char*)&skeleton_size, sizeof(skeleton_size));
 	bones_.resize(skeleton_size);
 	file.read((char*)bones_.data(), sizeof(Bone) * skeleton_size);

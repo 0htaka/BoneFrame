@@ -1,7 +1,7 @@
 #ifndef MESH_H_
 #define MESH_H_
 
-#include "AssetManager/Base/ILoadable.h"
+#include"Load\ILoadable.h"
 
 #include <opengl_ext.h>
 #include <vector>
@@ -10,7 +10,7 @@
 #include "Math/Vector3.h"
 #include "Math/Color.h"
 
-class Mesh : public ILoadable {
+class Mesh {
 public:
 	// マテリアル構造体
 	struct Material {
@@ -56,12 +56,13 @@ public:
 public:
 	// コンストラクタ
 	Mesh() = default;
+	Mesh(const std::string& filePath);
 	// デストラクタ
 	~Mesh();
 	// 描画
 	void Draw(Mesh::Shader& shader) const;
 	// ファイルの読み込み
-	void Load(const std::string& file_name) override;
+	void Load(const std::string& file_name);
 	// 消去
 	void Clear();
 
@@ -69,7 +70,7 @@ public:
 		materials_ = std::move(other.materials_);
 		subsets_ = std::move(other.subsets_);
 		indices_ = std::move(other.indices_);
-		vertices_ = std::move(other.vertices_);		
+		vertices_ = std::move(other.vertices_);
 		vertexArray_ = std::move(other.vertexArray_);
 	}
 
