@@ -9,7 +9,8 @@ class AnimManager : public LoadablesManager<AnimManager, Animation> {
 	//	void OnLoad(const std::string& filePath) override;
 };
 
-template<>
-void LoadablesManager<AnimManager, Animation>::OnLoad(const std::string& filePath) {
-	mAssets.emplace(GetFileName(filePath), Animation(filePath));
-}
+//template<>
+//void LoadablesManager<AnimManager, Animation>::OnLoad(const std::string& filePath) {
+//	auto temp = std::make_unique<Animation>(filePath);
+//	mAssets.emplace(GetFileName(filePath), temp);
+//}

@@ -2,9 +2,7 @@
 
 #include "IAssetManager.h"
 #include "Load/ILoadable.h"
-#include <unordered_map>
 #include <filesystem>
-#include <string>
 #include <mutex>
 
 template<typename Manager, typename Asset>
@@ -17,7 +15,7 @@ public:
 	}
 	Asset& Get(const std::string& name) override {
 		std::lock_guard<std::mutex> lock(mMutex);
-		return mAssets.at(name);
+		return *mAssets.at(name);
 	}
 	void Remove(const std::string& name) override {
 		std::lock_guard<std::mutex> lock(mMutex);
@@ -35,10 +33,25 @@ public:
 	}
 protected:
 	virtual void OnLoad(const std::string& filePath) {
-		mAssets.emplace(GetFileName(filePath), Asset(filePath));
+		auto temp = std::make_unique<Asset>(filePath);
+		auto fileName = GetFileName(filePath);
+		mAssets.emplace(fileName, std::move(temp));
 	}
 protected:
-	std::unordered_map<std::string, Asset> mAssets;
 	std::mutex mMutex;
 };
 
+//#include "Render\GLSLShader.h"
+//class GLSLVertManager : public LoadablesManager<GLSLVertManager, GLSLShader> {
+//protected:
+//	virtual void OnLoad(const std::string& filePath) {
+//		auto shader = std::make_unique<GLSLShader>(GL_VERTEX_SHADER, filePath);
+//		mAssets.emplace(GetFileName(filePath), std::move(shader));
+//	}
+//};
+//
+//template<>
+//void LoadablesManager<GLSLVertManager, std::unique_ptr<GLSLShader>>::OnLoad(const std::string& filePath) {
+//	//std::make_unique<GLSLShader>(GL_VERTEX_SHADER, filePath);
+//	//mAssets.emplace(GetFileName(filePath), );
+//}

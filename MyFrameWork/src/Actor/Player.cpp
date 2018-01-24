@@ -1,10 +1,10 @@
 #include "Player.h"
 
 void Player::OnUpdate(float deltaTime) {
-	mAnimTime += deltaTime;
-	if (mAnimTime >= mAnimation.EndFrame())
-		mAnimTime = 0.0f;
-	mSkinnedMesh.caluclate(GetPose(), mAnimTime);
+	mAnimTimer += deltaTime;
+	if (mAnimTimer >= mAnimation.EndTime())
+		mAnimTimer = 0.0f;
+	mSkinnedMesh.caluclate(GetPose(), mAnimTimer);
 
 	Vector3 velocity;
 	if (Input::Ins().mKeys.GetKeyState(VK_UP)) {

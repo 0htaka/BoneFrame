@@ -1,12 +1,18 @@
 #pragma once
 
-#include"Design/Singleton.h"
-#include<string>
+#include "Design/Singleton.h"
+#include <string>
+#include <unordered_map>
+#include <memory>
 
-template<typename Manager, typename Asset>
-class IAssetManager : public Singleton<Manager> {
+template<typename SingletonType, typename Asset>
+class IAssetManager : public Singleton<SingletonType> {	
+protected:
+	using AssetUPtr = std::unique_ptr<Asset>;
+public:
 	virtual Asset& Get(const std::string& name) = 0;
-	//virtual void Add(const Asset& asset) = 0;
 	virtual void Remove(const std::string& name) = 0;
 	virtual void Clear() = 0;
+protected:
+	std::unordered_map<std::string, AssetUPtr> mAssets;
 };

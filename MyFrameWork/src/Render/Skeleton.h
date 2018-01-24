@@ -26,7 +26,7 @@ public:
 	// ボーン数を返す
 	std::size_t Size() const;
 	// ボーンのローカル変換行列を計算する
-	void CalculateLocalMatrices(const Animation& animation, float frameNo, Matrix local[]) const;
+	void CalculateLocalMatrices(const Animation& animation, float animTime, Matrix local[]) const;
 	// ボーンのワールド変換行列を計算する
 	void CalculateWorldMatrices(const Matrix& parent, const Matrix local[], Matrix world[]) const;
 	// スキニング用の変換行列を計算する

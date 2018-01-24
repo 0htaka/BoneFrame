@@ -6,15 +6,19 @@
 #include "Render/Skeleton.h"
 #include "Render/Animation.h"
 #include "Render/SkinnedMesh.h"
+#include "AssetManager/MeshManager.h"
 
 class Player : public Actor
 {
 public:
 	Player()
 		: mSkinnedMesh{ mMesh, mSkeleton, mAnimation }
-		, mAnimTime(0.0f)
+		, mAnimTimer(0.0f)
+		, mMesh{ MeshManager::Ins().Get("Soldier") }
 	{
-		mMesh.Load("asset/model/Soldier.mshs");
+		//mMesh.Load("asset/model/Soldier.mshs");
+		//Mesh mesh;
+		//mesh.Load("asset/model/Soldier.mshs");
 		mSkeleton.Load("asset/model/Soldier.skls");
 		mAnimation.Load("asset/model/Y_Bot@jump.anms");
 	}
@@ -37,7 +41,7 @@ public:
 	}
 private:
 	// メッシュクラス
-	Mesh			mMesh;
+	Mesh&			mMesh;
 	// スケルトンクラス
 	Skeleton		mSkeleton;
 	// アニメーションクラス
@@ -46,5 +50,5 @@ private:
 	SkinnedMesh	mSkinnedMesh;
 	//シェーダ
 	SkinnedMeshShader* mShader;
-	float mAnimTime;
+	float mAnimTimer;
 };

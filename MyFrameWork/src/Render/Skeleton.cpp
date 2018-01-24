@@ -13,9 +13,9 @@ std::size_t Skeleton::Size() const {
 	return bones_.size();
 }
 
-void Skeleton::CalculateLocalMatrices(const Animation & animation, float frameNo, Matrix local[]) const {
+void Skeleton::CalculateLocalMatrices(const Animation & animation, float animTime, Matrix local[]) const {
 	for (const auto& bone : bones_) {
-		local[bone.ID] = animation.GetKeyFrame(bone.name, frameNo).matrix();
+		local[bone.ID] = animation.GetKeyFrame(bone.name, animTime).matrix();
 	}
 }
 

@@ -150,6 +150,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="C:\GameProgramLibrary\Ohzulibs\gslib_2015\src\GSgraphics\opengl_ext.c" />
     <ClCompile Include="src\Actor\Base\Actor.cpp" />
     <ClCompile Include="src\Actor\Base\ActorManager.cpp" />
     <ClCompile Include="src\Actor\Base\Camera\Camera.cpp" />
@@ -159,10 +160,12 @@
     <ClCompile Include="src\AssetManager\AnimManager.cpp" />
     <ClCompile Include="src\AssetManager\GLSLFragManager.cpp" />
     <ClCompile Include="src\AssetManager\GLSLVertManager.cpp" />
+    <ClCompile Include="src\Game\Device.cpp" />
+    <ClCompile Include="src\Game\Window.cpp" />
     <ClCompile Include="src\Load\IOLoader.cpp" />
     <ClCompile Include="src\Load\LoadManager.cpp" />
     <ClCompile Include="src\AssetManager\MeshManager.cpp" />
-    <ClCompile Include="src\Game\FPS\Time.cpp" />
+    <ClCompile Include="src\Util\Time.cpp" />
     <ClCompile Include="src\Game\MyGame.cpp" />
     <ClCompile Include="src\Input\Input.cpp" />
     <ClCompile Include="src\Input\KeyInput\KeyInput.cpp" />
@@ -210,6 +213,9 @@
     <ClInclude Include="src\AssetManager\Base\IAssetManager.h" />
     <ClInclude Include="src\AssetManager\GLSLFragManager.h" />
     <ClInclude Include="src\AssetManager\GLSLVertManager.h" />
+    <ClInclude Include="src\Game\Device.h" />
+    <ClInclude Include="src\Game\Window.h" />
+    <ClInclude Include="src\Game\Frame.h" />
     <ClInclude Include="src\Load\IOLoader.h" />
     <ClInclude Include="src\Load\ILoadable.h" />
     <ClInclude Include="src\AssetManager\Base\LoadablesManager.h" />
@@ -217,7 +223,7 @@
     <ClInclude Include="src\AssetManager\MeshManager.h" />
     <ClInclude Include="src\AssetManager\SkeletonManager.h" />
     <ClInclude Include="src\Design\Singleton.h" />
-    <ClInclude Include="src\Game\FPS\Time.h" />
+    <ClInclude Include="src\Util\Time.h" />
     <ClInclude Include="src\Game\MyGame.h" />
     <ClInclude Include="src\Input\GamePad\XInput.h" />
     <ClInclude Include="src\Input\Input.h" />
@@ -251,6 +257,7 @@
     <ClInclude Include="src\Scene\Base\Scenes.h" />
     <ClInclude Include="src\Scene\TestScene.h" />
     <ClInclude Include="src\Screen\Screen.h" />
+    <ClInclude Include="src\Util\RefPtr.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

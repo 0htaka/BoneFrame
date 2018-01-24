@@ -13,17 +13,17 @@ void LoadManager::Request(const std::string& filePath) {
 
 void LoadManager::LoadRequests()
 {
-	std::thread t([this]() {
+	//std::thread t([this]() {
 		while (!mRequests.empty())
 		{
-			auto& item = mRequests.back();
+			auto& item = mRequests.front();
 			item.manager.Load(item.path);
 			mRequests.pop();
 		}
-		//処理終了後デタッチ
-		mThread.detach();
-	});
-	mThread = std::move(t);
+	//	//処理終了後デタッチ
+	//	mThread.detach();
+	//});
+	//mThread = std::move(t);
 }
 
 bool LoadManager::IsComplete()

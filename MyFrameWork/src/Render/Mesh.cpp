@@ -21,7 +21,7 @@ void Mesh::Draw(Mesh::Shader& shader) const {
 		shader.material(materials_[subset.material]);
 		// ポリゴンを描画する
 		shader.begin();
-		const GLushort* base = 0;
+		const GLushort* base = nullptr;
 		glDrawElements(GL_TRIANGLES, subset.count, GL_UNSIGNED_SHORT, &base[subset.start]);
 		shader.end();
 	}
@@ -71,9 +71,11 @@ void Mesh::Load(const std::string & file_name) {
 	// 頂点バッファの作成
 	vertices_ = createBuffer(GL_ARRAY_BUFFER, sizeof(Vertex) * vertices.size(), vertices.data());
 	// インデックスバッファの作成
-	indices_  = createBuffer(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLushort) * indices.size(), indices.data());
+	indices_ = createBuffer(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLushort) * indices.size(), indices.data());
 	// 頂点配列オブジェクトの作成
 	vertexArray_ = createVertexArray();
+	if (!vertexArray_)
+		throw std::runtime_error("can't create vetex array");
 }
 
 // 消去
@@ -93,7 +95,7 @@ void Mesh::Clear() {
 
 // テクスチャの読み込み
 GLuint Mesh::createTexture(const std::string& file_name) {
-	unsigned int width  = 0;
+	unsigned int width = 0;
 	unsigned int height = 0;
 	std::vector<unsigned char> image;
 	auto error = lodepng::decode(image, width, height, file_name);
@@ -122,6 +124,8 @@ GLuint Mesh::createTexture(const std::string& file_name) {
 GLuint Mesh::createBuffer(GLenum target, GLuint size, const GLvoid* data) {
 	GLuint buffer = 0;
 	glGenBuffers(1, &buffer);
+	if (buffer == 0) //エラー
+		throw std::runtime_error("can not open");
 	glBindBuffer(target, buffer);
 	glBufferData(target, size, data, GL_STATIC_DRAW);
 	glBindBuffer(target, 0);

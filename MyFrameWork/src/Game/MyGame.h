@@ -2,7 +2,7 @@
 
 #include"Scene\Base\SceneManager.h"
 
-#include <GSgame.h>
+#include <Game/Frame.h>
 
 #include "Render/EffectGL.h"
 #include "Render/SkinnedMeshShader.h"
@@ -17,7 +17,7 @@
 #include"Actor\Base\Camera\Camera.h"
 #include"Actor/Base/World.h"
 
-class MyGame : public gslib::Game {
+class MyGame : public boneLib::Frame {//gslib::Game {
 public:
 	MyGame();
 	// 開始
@@ -40,7 +40,7 @@ private:
 	// エフェクト
 	EffectGL*		effect1_;
 	EffectGL*		effect2_;
-	
+
 	SkinnedMeshShader* shader;
 
 	// アニメーションタイマ

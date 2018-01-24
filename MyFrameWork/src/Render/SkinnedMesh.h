@@ -21,7 +21,7 @@ public:
 	// コンストラクタ
 	SkinnedMesh(Mesh& mesh, Skeleton& skeleton, Animation& animation);
 	// 計算
-	void caluclate(const Matrix& world, float frameNo);
+	void caluclate(const Matrix& world, float deltSec);
 	// 描画
 	void draw(SkinnedMesh::Shader& shader) const;
 

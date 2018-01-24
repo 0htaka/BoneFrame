@@ -2,8 +2,9 @@
 #include "Animation.h"
 #include <fstream>
 #include <algorithm>
+#include "Util/Time.h"
 
-inline std::pair<int, int> findKeyFrameSegment(const std::vector<Animation::KeyFrame>& keys, float frameNo);
+inline std::pair<int, int> findKeyFrameSegment(const std::vector<Animation::KeyFrame>& keys, float deltaSec);
 
 // コンストラクタ
 Animation::Animation() {
@@ -14,10 +15,11 @@ Animation::Animation(const std::string & filePath) {
 }
 
 // 指定ボーンのアニメーション変換行列を求める
-Animation::KeyFrame Animation::GetKeyFrame(const std::string& boneName, float frameNo) const {
-	const auto keys = boneKeyFrames_.find(boneName);
+Animation::KeyFrame Animation::GetKeyFrame(const std::string& boneName, float deltaSec) const {
+	float frameNo = deltaSec * Time::TargetFPS();
+	const auto keys = mBoneKeyFrames.find(boneName);
 	KeyFrame result;
-	if (keys == boneKeyFrames_.end()) {
+	if (keys == mBoneKeyFrames.end()) {
 		// アニメーションキーが存在しない場合
 		result.frameNo = frameNo;
 		result.scale = Vector3(1.0f, 1.0f, 1.0f);
@@ -41,7 +43,7 @@ Animation::KeyFrame Animation::GetKeyFrame(const std::string& boneName, float fr
 
 // 消去
 void Animation::Clear() {
-	boneKeyFrames_.clear();
+	mBoneKeyFrames.clear();
 }
 
 // ファイルから読み込む
@@ -61,25 +63,25 @@ void Animation::Load(const std::string& fileName) {
 
 		unsigned int key_frame_size = 0;
 		file.read((char*)&key_frame_size, sizeof(key_frame_size));
-		boneKeyFrames_[bone_name].resize(key_frame_size);
+		mBoneKeyFrames[bone_name].resize(key_frame_size);
 		unsigned int temp = sizeof(KeyFrame) * key_frame_size;
-		file.read((char*)boneKeyFrames_[bone_name].data(), sizeof(KeyFrame) * key_frame_size);
+		file.read((char*)mBoneKeyFrames[bone_name].data(), sizeof(KeyFrame) * key_frame_size);
 
 		//デバッグ
-		Quaternion rot = boneKeyFrames_[bone_name].at(0).rotate;
-		Vector3 pos = boneKeyFrames_[bone_name].at(0).position;
+		Quaternion rot = mBoneKeyFrames[bone_name].at(0).rotate;
+		Vector3 pos = mBoneKeyFrames[bone_name].at(0).position;
 		//_RPTN(_CRT_WARN, "[%s]rotatation x:%f ,y:%f, z:%f, w:%f \n", bone_name, rot.x, rot.y, rot.z, rot.w);
 		_RPTN(_CRT_WARN, "[%s]position x:%f ,y:%f, z:%f \n", bone_name, pos.x, pos.y, pos.z);
 	}
 }
 
 // 終了フレーム数を返す
-float Animation::EndFrame() const {
+float Animation::EndTime() const {
 	float result = 0.0f;
-	for (const auto& keys : boneKeyFrames_) {
+	for (const auto& keys : mBoneKeyFrames) {
 		result = std::max(result, keys.second.back().frameNo);
 	}
-	return result;
+	return result / Time::TargetFPS();
 }
 
 // 変換行列を計算する
@@ -89,21 +91,21 @@ Matrix Animation::KeyFrame::matrix() const {
 
 
 // キーフレームの区間を検索
-inline std::pair<int, int> findKeyFrameSegment(const std::vector<Animation::KeyFrame>& keys, float frameNo) {
+inline std::pair<int, int> findKeyFrameSegment(const std::vector<Animation::KeyFrame>& keys, float deltaSec) {
 	int start = 0;
 	int end = (int)keys.size() - 1;
-	if (keys[start].frameNo >= frameNo) {
+	if (keys[start].frameNo >= deltaSec) {
 		return std::pair<int, int>(start, start);
 	}
-	if (keys[end].frameNo <= frameNo) {
+	if (keys[end].frameNo <= deltaSec) {
 		return std::pair<int, int>(end, end);
 	}
 	while ((start + 1) < end) {
 		const int mid = (start + end) / 2;
-		if (keys[mid].frameNo == frameNo) {
+		if (keys[mid].frameNo == deltaSec) {
 			return std::pair<int, int>(mid, mid);
 		}
-		else if (keys[mid].frameNo < frameNo) {
+		else if (keys[mid].frameNo < deltaSec) {
 			start = mid;
 		}
 		else {

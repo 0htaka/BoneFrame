@@ -1,8 +1,8 @@
 #include"MyGame.h"
-#include <GSgame.h>
+//#include <GSgame.h>
 
 #include"Screen\Screen.h"
-#include"FPS\Time.h"
+#include"Util/Time.h"
 #include"Input\Input.h"
 #include"Scene\Base\SceneManager.h"
 
@@ -15,9 +15,10 @@
 
 //using EffectGLManager = AssetManager<EffectGL*>;
 //class EffectGLManager : public AssetManager<EffectGL*> {};
-
+#include"Util/RefPtr.h"
 MyGame::MyGame()
-	: gslib::Game()
+	: boneLib::Frame()
+	//: gslib::Game()
 	, m_isEnd(false)
 {
 }
@@ -37,19 +38,17 @@ void MyGame::start()
 	// deltaTime ‚ğŠÇ—‚·‚éƒNƒ‰ƒX‚Ì‰Šú‰»
 	Time::Init();
 
-	AssetManagerMap<int> temp;
-	temp.Clear();
-
 	/*:::::::::::::::::::::::::::::::::::::::::::::*/
 	LoadManager::Ins().Request("asset/model/Soldier.mshs");
-	LoadManager::Ins().Request("asset/model/Y_Bot@jump.anms");
+	LoadManager::Ins().Request("asset/model/FUCM_04_0001_RHiKick.anms");
 	LoadManager::Ins().Request("asset/model/Soldier.skls");
 	LoadManager::Ins().LoadRequests();
 
-	while (true) {
+	/*while (true) {
 		if (LoadManager::Ins().IsComplete())
 			break;
-	}
+	}*/
+	//auto& mesh = MeshManager::Ins().Get("Soldier");
 	//EffectGLManager::Ins().Clear();
 
 	//GLSLFragManager::Ins().

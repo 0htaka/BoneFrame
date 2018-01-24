@@ -32,10 +32,12 @@ public:
 	// ファイルから読み込む
 	void Load(const std::string& fileName);
 	// 終了フレーム数を返す
-	float EndFrame() const;
+	float EndTime() const;
 private:
 	// ボーンキーフレーム
-	std::unordered_map<std::string, std::vector<KeyFrame>> boneKeyFrames_;
+	std::unordered_map<std::string, std::vector<KeyFrame>> mBoneKeyFrames;
+	//アニメーションのサンプル数
+	int FPS{ 30 };
 };
 
 #endif

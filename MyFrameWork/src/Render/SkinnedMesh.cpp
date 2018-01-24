@@ -1,4 +1,5 @@
 #include "SkinnedMesh.h"
+#include "Util/Time.h"
 
 // コンストラクタ
 SkinnedMesh::SkinnedMesh(Mesh & mesh, Skeleton & skeleton, Animation & animation) :
@@ -8,9 +9,9 @@ SkinnedMesh::SkinnedMesh(Mesh & mesh, Skeleton & skeleton, Animation & animation
 }
 
 // 計算
-void SkinnedMesh::caluclate(const Matrix& world, float frameNo) {
+void SkinnedMesh::caluclate(const Matrix& world, float animTime) {
 	// アニメーション変換行列の計算
-	skeleton_->CalculateLocalMatrices(*animation_, frameNo, localMatrices_);
+	skeleton_->CalculateLocalMatrices(*animation_, animTime, localMatrices_);
 	// ワールド変換行列の計算
 	skeleton_->CalculateWorldMatrices(world, localMatrices_, worldMatrices_);
 	// スキニング用の変換行列の計算
