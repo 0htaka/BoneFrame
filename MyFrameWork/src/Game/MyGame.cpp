@@ -1,5 +1,4 @@
 #include"MyGame.h"
-//#include <GSgame.h>
 
 #include"Screen\Screen.h"
 #include"Util/Time.h"
@@ -13,18 +12,38 @@
 #include"AssetManager\GLSLFragManager.h"
 #include"AssetManager\GLSLVertManager.h"
 
+#include "Render/EffectGL.h"
+#include "Render/SkinnedMeshShader.h"
+#include "Render/Mesh.h"
+#include "Render/Skeleton.h"
+#include "Render/Animation.h"
+#include "Render/SkinnedMesh.h"
+#include"Actor\Player.h"
+#include"Actor\Base\Camera\Camera.h"
+
 //using EffectGLManager = AssetManager<EffectGL*>;
 //class EffectGLManager : public AssetManager<EffectGL*> {};
 #include"Util/RefPtr.h"
 MyGame::MyGame()
-	: boneLib::Frame()
+	: bonelib::Frame()
 	//: gslib::Game()
 	, m_isEnd(false)
 {
 }
 
+#include<thread>
+#include <GLFW/glfw3.h>
+#include <GL/GLU.h>
 void MyGame::start()
 {
+	EffectGL* subEf;
+	auto sub = bonelib::Window::sSubWindow;
+	std::thread th([&]() {
+		glfwMakeContextCurrent(sub);
+		subEf = new EffectGL("asset/shader/skinned_mesh_normal.vert", "asset/shader/skinned_mesh_normal.frag");
+		glfwMakeContextCurrent(nullptr);
+	});
+	th.join();
 	//各ライブラリ、クラス等の初期化	
 
 	//ロード等、頻繁に使うリソースのロード
@@ -44,17 +63,14 @@ void MyGame::start()
 	LoadManager::Ins().Request("asset/model/Soldier.skls");
 	LoadManager::Ins().LoadRequests();
 
-	/*while (true) {
-		if (LoadManager::Ins().IsComplete())
-			break;
-	}*/
-	//auto& mesh = MeshManager::Ins().Get("Soldier");
-	//EffectGLManager::Ins().Clear();
+	while (!LoadManager::Ins().IsComplete());
+
+	glfwMakeContextCurrent(bonelib::Window::sMainWindow);
 
 	//GLSLFragManager::Ins().
 	effect1_ = new EffectGL("asset/shader/skinned_mesh.vert", "asset/shader/skinned_mesh.frag");
 	effect2_ = new EffectGL("asset/shader/skinned_mesh_normal.vert", "asset/shader/skinned_mesh_normal.frag");
-	shader = new SkinnedMeshShader(*effect2_);
+	shader = new SkinnedMeshShader(*subEf);
 
 	player = std::make_shared<Player>();
 	player->SetShader(shader);

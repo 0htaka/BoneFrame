@@ -50,7 +50,8 @@ void GLSLShader::compile(const std::string & fileName) {
 
 std::vector<char> GLSLShader::load(const std::string & fileName) {
 	std::ifstream file(fileName, std::ios::binary);
-	if (!file) throw std::runtime_error("can not open" + fileName);
+	if (!file) 
+		throw std::runtime_error("can not open" + fileName);
 	// ファイルサイズの取得
 	file.seekg(0, std::ios_base::end);
 	std::size_t size = (std::size_t)file.tellg();

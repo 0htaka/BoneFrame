@@ -150,7 +150,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="C:\GameProgramLibrary\Ohzulibs\gslib_2015\src\GSgraphics\opengl_ext.c" />
     <ClCompile Include="src\Actor\Base\Actor.cpp" />
     <ClCompile Include="src\Actor\Base\ActorManager.cpp" />
     <ClCompile Include="src\Actor\Base\Camera\Camera.cpp" />

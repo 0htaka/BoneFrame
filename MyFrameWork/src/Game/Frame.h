@@ -4,18 +4,18 @@
 
 #include"Util/Time.h"
 
-namespace boneLib {
+namespace bonelib {
 
 	class Frame {
 	protected:
 		// コンストラクタ
 		Frame(int width = 640, int height = 480, bool fullScreen = false, float fps = 60.0f)
-			: width_(width)
-			, height_(height)
-			, fullScreen_(fullScreen)
-			, isRunnning_(true)
-			, fps_(fps)
-			, device_(width, height, fullScreen, fps) 
+			: mWidth(width)
+			, mHeight(height)
+			, mFullScreen(fullScreen)
+			, mIsRunning(true)
+			, mFps(fps)
+			, mDevice(width, height, fullScreen, fps) 
 		{
 			_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);// メモリリーク検出
 		}
@@ -26,20 +26,20 @@ namespace boneLib {
 			// deltaTime を管理するクラスの初期化
 			Time::Init();
 			start();
-			while (!device_.isClose() && isRunning()) {
+			while (!mDevice.isClose() && isRunning()) {
 			//while (isRunning()) {
 				Time::Update();
 				//update(60.0f / fps_);
 				update(Time::DeltaTime());
 				draw();
-				device_.swap();
+				mDevice.swap();
 			}
 			end();
 			return 0;
 		}
 
 		void stopRunning() {
-			isRunnning_ = false;
+			mIsRunning = false;
 		}
 
 	private:
@@ -51,8 +51,8 @@ namespace boneLib {
 		virtual void draw() {}
 		// 終了
 		virtual void end() {}
-		// 実行中か
-		virtual bool isRunning() { return ((GetAsyncKeyState(VK_ESCAPE) == 0) && isRunnning_); }
+		// 実行中か gslib's
+		virtual bool isRunning() { return true; }
 
 	public:
 		// コピー禁止
@@ -61,17 +61,18 @@ namespace boneLib {
 
 	private:
 		// ウィンドウの幅
-		int width_;
+		int mWidth;
 		// ウィンドウの高さ
-		int height_;
+		int mHeight;
 		// フルスクリーンか？
-		bool fullScreen_;
+		bool mFullScreen;
 		//実行中か？
-		bool isRunnning_;
+		bool mIsRunning;
 		// FPS
-		float fps_;
+		float mFps;
+	public:
 		// GSLIBデバイスクラス
-		Device device_;
+		Device mDevice;
 	};
 
 }

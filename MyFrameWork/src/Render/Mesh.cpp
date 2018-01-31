@@ -4,6 +4,16 @@
 #include <vector>
 #include <filesystem>
 
+Mesh::Mesh()
+{
+	glGenBuffers(1, &vertices_);
+	glGenBuffers(1, &indices_);
+	for (auto& mat : materials_) {
+		glGenBuffers(1, &mat.texture);
+	}
+	glGenVertexArrays(1, &vertexArray_);
+}
+
 Mesh::Mesh(const std::string & filePath) {
 	Load(filePath);
 }
@@ -13,9 +23,24 @@ Mesh::~Mesh() {
 	Clear();
 }
 
+#include<GL/GLU.h>
 void Mesh::Draw(Mesh::Shader& shader) const {
+	auto error = glGetError();
+	const GLubyte *errstring = gluErrorString(error);
+	if (error != GL_NO_ERROR) {
+		printf("%s\n", errstring);
+		throw std::runtime_error("GL ERROR");
+	}
+
 	// 頂点配列のバインド
 	glBindVertexArray(vertexArray_);
+	error = glGetError();
+	errstring = gluErrorString(error);
+	if (error != GL_NO_ERROR) {
+		printf("%s\n", errstring);
+		throw std::runtime_error("GL ERROR");
+	}
+
 	for (auto&& subset : subsets_) {
 		// マテリアルの設定
 		shader.material(materials_[subset.material]);
@@ -35,7 +60,7 @@ void Mesh::Load(const std::string & file_name) {
 		throw std::runtime_error("can not open " + file_name);
 	}
 	// 消去
-	Clear();
+	//Clear();
 	// マテリアルの読み込み
 	unsigned int material_size = 0;
 	file.read((char*)&material_size, sizeof(material_size));
@@ -65,8 +90,8 @@ void Mesh::Load(const std::string & file_name) {
 		texture_path = mesh_path.parent_path().string() + "/";
 	}
 	for (auto& mat : materials_) {
-		mat.texture = createTexture(texture_path + mat.texture_file_name);
-		mat.normal_texture = createTexture(texture_path + mat.normal_texture_file_name);
+		mat.texture = createTexture(texture_path + mat.texture_file_name, mat.texture);
+		mat.normal_texture = createTexture(texture_path + mat.normal_texture_file_name, mat.texture);
 	}
 	// 頂点バッファの作成
 	vertices_ = createBuffer(GL_ARRAY_BUFFER, sizeof(Vertex) * vertices.size(), vertices.data());
@@ -94,7 +119,7 @@ void Mesh::Clear() {
 }
 
 // テクスチャの読み込み
-GLuint Mesh::createTexture(const std::string& file_name) {
+GLuint Mesh::createTexture(const std::string& file_name, GLuint& tex) {
 	unsigned int width = 0;
 	unsigned int height = 0;
 	std::vector<unsigned char> image;
@@ -102,8 +127,8 @@ GLuint Mesh::createTexture(const std::string& file_name) {
 	if (error != 0) {
 		throw std::runtime_error("can not open");
 	}
-	GLuint texture = 0;
-	glGenTextures(1, &texture);
+	GLuint texture = tex;
+	//glGenTextures(1, &texture);
 	glBindTexture(GL_TEXTURE_2D, texture);
 	glTexImage2D(
 		GL_TEXTURE_2D,
@@ -122,8 +147,8 @@ GLuint Mesh::createTexture(const std::string& file_name) {
 }
 
 GLuint Mesh::createBuffer(GLenum target, GLuint size, const GLvoid* data) {
-	GLuint buffer = 0;
-	glGenBuffers(1, &buffer);
+	GLuint& buffer = target == GL_ARRAY_BUFFER ? vertices_ : indices_;
+	//glGenBuffers(1, &buffer);
 	if (buffer == 0) //エラー
 		throw std::runtime_error("can not open");
 	glBindBuffer(target, buffer);
@@ -133,8 +158,8 @@ GLuint Mesh::createBuffer(GLenum target, GLuint size, const GLvoid* data) {
 }
 
 GLuint Mesh::createVertexArray() {
-	GLuint vertexArray = 0;
-	glGenVertexArrays(1, &vertexArray);
+	GLuint vertexArray = vertexArray_;
+	//glGenVertexArrays(1, &vertexArray);
 	glBindVertexArray(vertexArray);
 	// 頂点座標のバインド
 	glBindBuffer(GL_ARRAY_BUFFER, vertices_);

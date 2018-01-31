@@ -55,7 +55,7 @@ public:
 
 public:
 	// コンストラクタ
-	Mesh() = default;
+	Mesh();
 	Mesh(const std::string& filePath);
 	// デストラクタ
 	~Mesh();
@@ -80,7 +80,7 @@ public:
 
 private:
 	// テクスチャの読み込み
-	GLuint	createTexture(const std::string& file_name);
+	GLuint	createTexture(const std::string& file_name, GLuint& tex);
 	// バッファオブジェクトの作成
 	GLuint createBuffer(GLenum target, GLuint size, const GLvoid* data);
 	// 頂点配列オブジェクトの作成

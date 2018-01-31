@@ -9,7 +9,7 @@
 class LoadManager : public Singleton<LoadManager> {
 	struct Item
 	{
-		ILoadable& manager;
+		ILoadable& manager;		
 		std::string path;
 
 		Item(ILoadable& manager, const std::string& path)

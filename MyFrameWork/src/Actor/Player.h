@@ -47,7 +47,7 @@ private:
 	// アニメーションクラス
 	Animation		mAnimation;
 	// スキニングメッシュクラス
-	SkinnedMesh	mSkinnedMesh;
+	SkinnedMesh		mSkinnedMesh;
 	//シェーダ
 	SkinnedMeshShader* mShader;
 	float mAnimTimer;

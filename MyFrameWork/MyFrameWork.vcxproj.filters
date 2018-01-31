@@ -129,9 +129,6 @@
     <ClCompile Include="src\Game\Window.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="C:\GameProgramLibrary\Ohzulibs\gslib_2015\src\GSgraphics\opengl_ext.c">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="src\Game\Device.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>

@@ -3,21 +3,14 @@
 #include"Scene\Base\SceneManager.h"
 
 #include <Game/Frame.h>
-
-#include "Render/EffectGL.h"
-#include "Render/SkinnedMeshShader.h"
-#include "Render/Mesh.h"
-#include "Render/Skeleton.h"
-#include "Render/Animation.h"
-#include "Render/SkinnedMesh.h"
-
-#include"Input\KeyInput\KeyInput.h"
-
-#include"Actor\Player.h"
-#include"Actor\Base\Camera\Camera.h"
 #include"Actor/Base/World.h"
 
-class MyGame : public boneLib::Frame {//gslib::Game {
+class Camera;
+class Player;
+class EffectGL;
+class SkinnedMeshShader;
+
+class MyGame : public bonelib::Frame {//gslib::Game {
 public:
 	MyGame();
 	// 開始
@@ -45,5 +38,4 @@ private:
 
 	// アニメーションタイマ
 	float timer_ = 0.0f;
-
 };

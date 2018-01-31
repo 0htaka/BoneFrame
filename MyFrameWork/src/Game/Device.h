@@ -1,10 +1,8 @@
 #pragma once
 
 #include "Window.h"
-#include <GL/GLU.h>
-#include <GL/glext.h>
 
-namespace boneLib {
+namespace bonelib {
 
 	class Device {
 	public:
@@ -24,7 +22,7 @@ namespace boneLib {
 		// コピー禁止
 		Device(const Device& other) = delete;
 		Device& operator = (const Device& other) = delete;
-	private:
+	public:
 		// ウィンドウクラス
 		Window mWindow;
 		// フレームタイマ

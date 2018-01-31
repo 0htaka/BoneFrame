@@ -66,12 +66,6 @@ void Animation::Load(const std::string& fileName) {
 		mBoneKeyFrames[bone_name].resize(key_frame_size);
 		unsigned int temp = sizeof(KeyFrame) * key_frame_size;
 		file.read((char*)mBoneKeyFrames[bone_name].data(), sizeof(KeyFrame) * key_frame_size);
-
-		//デバッグ
-		Quaternion rot = mBoneKeyFrames[bone_name].at(0).rotate;
-		Vector3 pos = mBoneKeyFrames[bone_name].at(0).position;
-		//_RPTN(_CRT_WARN, "[%s]rotatation x:%f ,y:%f, z:%f, w:%f \n", bone_name, rot.x, rot.y, rot.z, rot.w);
-		_RPTN(_CRT_WARN, "[%s]position x:%f ,y:%f, z:%f \n", bone_name, pos.x, pos.y, pos.z);
 	}
 }
 

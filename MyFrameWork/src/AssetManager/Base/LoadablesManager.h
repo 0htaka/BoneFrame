@@ -4,6 +4,7 @@
 #include "Load/ILoadable.h"
 #include <filesystem>
 #include <mutex>
+#include <queue>
 
 template<typename Manager, typename Asset>
 class LoadablesManager : public IAssetManager<Manager, Asset>, public ILoadable {
@@ -31,14 +32,25 @@ public:
 		std::string fileNmae(path.filename().string());
 		return fileNmae.erase(fileNmae.find_last_of('.'));
 	}
+	void CreateAsset() {
+		mReqests.emplace(AssetUPtr(new Asset()));
+	}
+	AssetUPtr PopReqest() {
+		AssetUPtr temp = std::move(mReqests.front());
+		mReqests.pop();
+		return temp;
+	}
 protected:
 	virtual void OnLoad(const std::string& filePath) {
-		auto temp = std::make_unique<Asset>(filePath);
+		//auto temp = std::make_unique<Asset>(filePath);
+		auto& temp = PopReqest();
+		temp->Load(filePath);
 		auto fileName = GetFileName(filePath);
 		mAssets.emplace(fileName, std::move(temp));
 	}
 protected:
 	std::mutex mMutex;
+	std::queue<AssetUPtr> mReqests;
 };
 
 //#include "Render\GLSLShader.h"

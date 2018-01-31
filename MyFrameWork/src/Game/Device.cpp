@@ -1,7 +1,9 @@
 #include "Device.h"
 
-using namespace boneLib;
+#include <GL/glut.h>
+#include <opengl_ext.h>
 
+using namespace bonelib;
 
 // コンストラクタ
 Device::Device(int width, int height, bool fullScreen, float fps) :
@@ -101,7 +103,7 @@ void Device::activate(bool state) {
 	//gsActivateSound(state ? GS_TRUE : GS_FALSE);
 }
 
-void boneLib::Device::resize(int width, int height) {
+void Device::resize(int width, int height) {
 	// 高さが０にならないように調整
 	height = (height == 0) ? 1 : height;
 	// ビューポートの設定
