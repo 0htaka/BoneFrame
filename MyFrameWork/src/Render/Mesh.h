@@ -80,7 +80,7 @@ public:
 
 private:
 	// テクスチャの読み込み
-	GLuint	createTexture(const std::string& file_name, GLuint& tex);
+	GLuint	createTexture(const std::string& file_name);
 	// バッファオブジェクトの作成
 	GLuint createBuffer(GLenum target, GLuint size, const GLvoid* data);
 	// 頂点配列オブジェクトの作成

@@ -16,14 +16,12 @@ void LoadManager::Request(const std::string& filePath) {
 #include <GL/GLU.h>
 void LoadManager::LoadRequests()
 {
-#define MYSUBWIN
+#define A
 #ifdef MYSUBWIN
 	//auto subWin = bonelib::Window::createSubWin();
 	auto subWin = bonelib::Window::sSubWindow;
 	if (!subWin)
 		throw std::runtime_error("can't create sub window");
-
-
 
 	////”ñ“¯Šúˆ—
 	std::thread t([&]() {
