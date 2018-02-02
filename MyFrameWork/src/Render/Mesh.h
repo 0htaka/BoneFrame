@@ -66,15 +66,9 @@ public:
 	// 消去
 	void Clear();
 
-	Mesh(Mesh&& other) = default;
-	/*{
-		materials_ = std::move(other.materials_);
-		subsets_ = std::move(other.subsets_);
-		indices_ = std::move(other.indices_);
-		vertices_ = std::move(other.vertices_);
-		vertexArray_ = std::move(other.vertexArray_);
-	}*/
 
+	// ムーブコンストラクタ
+	Mesh(Mesh&& other) = default;
 	// コピー禁止
 	Mesh(const Mesh&) = delete;
 	Mesh& operator = (const Mesh&) = delete;
@@ -82,11 +76,10 @@ public:
 private:
 	// テクスチャの読み込み
 	GLuint	createTexture(const std::string& file_name);
-	// バッファオブジェクトの作成
-	GLuint createBuffer(GLenum target, GLuint size, const GLvoid* data);
+	// バッファオブジェクトにデータをセット
+	void setToBuffer(GLenum target, GLenum& buffer, GLuint size, const GLvoid* data);
 	// 頂点配列オブジェクトの作成
-	GLuint createVertexArray();
-
+	void createVertexArray();
 private:
 	// マテリアル配列
 	std::vector<Material>	materials_;

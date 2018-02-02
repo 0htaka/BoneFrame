@@ -2,7 +2,6 @@
 
 #include "Design\Singleton.h"
 #include<queue>
-#include<string>
 #include<thread>
 #include"ILoadable.h"
 
@@ -19,7 +18,7 @@ class LoadManager : public Singleton<LoadManager> {
 	};
 
 public:
-	//非同期読み込みにキューに追加
+	//非同期読み込みキューに追加
 	void Request(const std::string& filePath);
 	//キュー内を非同期読み込み
 	void LoadRequests();

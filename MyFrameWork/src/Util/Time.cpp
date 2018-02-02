@@ -29,7 +29,7 @@ void Time::Update()
 	mDeltaTime = (mStartTime - mPreTime) / 1000.0f;
 }
 
-#include<gslib.h>
+//#include<gslib.h>
 #include<string>
 void Time::Draw()
 {	

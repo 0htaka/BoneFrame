@@ -10,7 +10,6 @@
 using namespace bonelib;
 
 GLFWwindow* Window::sMainWindow = NULL;
-GLFWwindow* Window::sSubWindow = NULL;
 
 #include <iostream>
 void errorCallBack(int error, const char* description) {
@@ -33,14 +32,9 @@ Window::Window(int width, int height, const std::string & name, bool fullScreen)
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_SAMPLES, 4);
 
-	//サブウィンド作成
-	glfwWindowHint(GLFW_VISIBLE, GL_FALSE);
-	sSubWindow = glfwCreateWindow(1, 1, "subWin", NULL, NULL);
-	glfwWindowHint(GLFW_VISIBLE, GL_TRUE);
-
 	//フルスクリーンにするかどうか
 	auto monitor = fullScreen ? glfwGetPrimaryMonitor() : NULL;	
-	sMainWindow = glfwCreateWindow(width, height, name.c_str(), monitor, sSubWindow);
+	sMainWindow = glfwCreateWindow(width, height, name.c_str(), monitor, NULL);
 
 	if (!sMainWindow) {
 		glfwTerminate();
@@ -50,7 +44,6 @@ Window::Window(int width, int height, const std::string & name, bool fullScreen)
 	glfwMakeContextCurrent(sMainWindow);
 	// 自身をWindowとして設定（glfwGetWindowUserPointer()で取得できるようにするだけ？
 	glfwSetWindowUserPointer(sMainWindow, this);
-	//if(!glew)
 }
 
 // デストラクタ
@@ -122,10 +115,10 @@ void Window::resizeCallback(GLFWwindow * window, int width, int height) {
 
 
 /*テスト用*/
-GLFWwindow * bonelib::Window::createSubWin()
+GLFWwindow * Window::createSubWin()
 {
 	GLFWwindow* win;
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_COMPAT_PROFILE);
+	//glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_COMPAT_PROFILE);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 

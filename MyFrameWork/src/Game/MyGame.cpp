@@ -36,14 +36,6 @@ MyGame::MyGame()
 #include <GL/GLU.h>
 void MyGame::start()
 {
-	EffectGL* subEf;
-	auto sub = bonelib::Window::sSubWindow;
-	std::thread th([&]() {
-		glfwMakeContextCurrent(sub);
-		subEf = new EffectGL("asset/shader/skinned_mesh_normal.vert", "asset/shader/skinned_mesh_normal.frag");
-		glfwMakeContextCurrent(nullptr);
-	});
-	th.join();
 	//各ライブラリ、クラス等の初期化	
 
 	//ロード等、頻繁に使うリソースのロード
@@ -65,12 +57,9 @@ void MyGame::start()
 
 	while (!LoadManager::Ins().IsComplete());
 
-	glfwMakeContextCurrent(bonelib::Window::sMainWindow);
-
-	//GLSLFragManager::Ins().
 	effect1_ = new EffectGL("asset/shader/skinned_mesh.vert", "asset/shader/skinned_mesh.frag");
 	effect2_ = new EffectGL("asset/shader/skinned_mesh_normal.vert", "asset/shader/skinned_mesh_normal.frag");
-	shader = new SkinnedMeshShader(*subEf);
+	shader = new SkinnedMeshShader(*effect2_);
 
 	player = std::make_shared<Player>();
 	player->SetShader(shader);
@@ -80,7 +69,7 @@ void MyGame::start()
 	mWorld.AddActor(player);
 	mWorld.AddActor(camera);
 
-	camera->SetRotate(camera->GetRotate().Forward(player->GetPosition() + Vector3{ 0, 10, 0 } -camera->GetPosition()));
+	camera->SetRotate(camera->GetRotate().Forward(player->GetPosition() + Vector3{ 0, 10, 0 } - camera->GetPosition()));
 }
 
 void MyGame::update(float deltaTime)

@@ -32,7 +32,6 @@ namespace bonelib {
 		float getTime() const;
 	public://サブスレッドテスト用　メンバ		
 		static GLFWwindow* createSubWin();
-		static GLFWwindow* sSubWindow;
 	private:
 		static void forcusCallback(GLFWwindow* window, int focused);
 		static void resizeCallback(GLFWwindow* window, int width, int height);

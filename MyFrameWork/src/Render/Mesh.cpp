@@ -4,11 +4,12 @@
 #include <vector>
 #include <filesystem>
 
-Mesh::Mesh()
-{
+Mesh::Mesh() {
+	createVertexArray();
 }
 
 Mesh::Mesh(const std::string & filePath) {
+	createVertexArray();
 	Load(filePath);
 }
 
@@ -19,21 +20,8 @@ Mesh::~Mesh() {
 
 #include<GL/GLU.h>
 void Mesh::Draw(Mesh::Shader& shader) const {
-	auto error = glGetError();
-	const GLubyte *errstring = gluErrorString(error);
-	if (error != GL_NO_ERROR) {
-		printf("%s\n", errstring);
-		throw std::runtime_error("GL ERROR");
-	}
-
 	// 頂点配列のバインド
 	glBindVertexArray(vertexArray_);
-	error = glGetError();
-	errstring = gluErrorString(error);
-	if (error != GL_NO_ERROR) {
-		printf("%s\n", errstring);
-		throw std::runtime_error("GL ERROR");
-	}
 
 	for (auto&& subset : subsets_) {
 		// マテリアルの設定
@@ -49,12 +37,13 @@ void Mesh::Draw(Mesh::Shader& shader) const {
 
 // ファイルの読み込み
 void Mesh::Load(const std::string & file_name) {
+	if (!materials_.empty() || !subsets_.empty())
+		throw std::runtime_error("Mesh instance has already loaded. try to load new file " + file_name);
+
 	std::ifstream file(file_name, std::ios::binary);
-	if (!file) {
+	if (!file)
 		throw std::runtime_error("can not open " + file_name);
-	}
-	// 消去
-	Clear();
+
 	// マテリアルの読み込み
 	unsigned int material_size = 0;
 	file.read((char*)&material_size, sizeof(material_size));
@@ -88,13 +77,9 @@ void Mesh::Load(const std::string & file_name) {
 		mat.normal_texture = createTexture(texture_path + mat.normal_texture_file_name);
 	}
 	// 頂点バッファの作成
-	vertices_ = createBuffer(GL_ARRAY_BUFFER, sizeof(Vertex) * vertices.size(), vertices.data());
+	setToBuffer(GL_ARRAY_BUFFER, vertices_, sizeof(Vertex) * vertices.size(), vertices.data());
 	// インデックスバッファの作成
-	indices_ = createBuffer(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLushort) * indices.size(), indices.data());
-	// 頂点配列オブジェクトの作成
-	vertexArray_ = createVertexArray();
-	if (!vertexArray_)
-		throw std::runtime_error("can't create vetex array");
+	setToBuffer(GL_ELEMENT_ARRAY_BUFFER, indices_, sizeof(GLushort) * indices.size(), indices.data());
 }
 
 // 消去
@@ -140,21 +125,20 @@ GLuint Mesh::createTexture(const std::string& file_name) {
 	return texture;
 }
 
-GLuint Mesh::createBuffer(GLenum target, GLuint size, const GLvoid* data) {
-	GLuint buffer = 0;
-	glGenBuffers(1, &buffer);
+void Mesh::setToBuffer(GLenum target, GLenum& buffer, GLuint size, const GLvoid* data) {
 	if (buffer == 0) //エラー
 		throw std::runtime_error("can not open");
 	glBindBuffer(target, buffer);
 	glBufferData(target, size, data, GL_STATIC_DRAW);
 	glBindBuffer(target, 0);
-	return buffer;
 }
 
-GLuint Mesh::createVertexArray() {
-	GLuint vertexArray = 0;
-	glGenVertexArrays(1, &vertexArray);
-	glBindVertexArray(vertexArray);
+void Mesh::createVertexArray() {
+	glGenBuffers(1, &vertices_);
+	glGenBuffers(1, &indices_);
+
+	glGenVertexArrays(1, &vertexArray_);
+	glBindVertexArray(vertexArray_);
 	// 頂点座標のバインド
 	glBindBuffer(GL_ARRAY_BUFFER, vertices_);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, position));
@@ -174,6 +158,8 @@ GLuint Mesh::createVertexArray() {
 	// インデックスバッファの設定
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indices_);
 	glBindVertexArray(0);
-	return vertexArray;
+
+	if (!vertexArray_)
+		throw std::runtime_error("can't create vetex array");
 }
 

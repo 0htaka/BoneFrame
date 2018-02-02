@@ -4,8 +4,8 @@
 //#include"Render\GLSLShader.h"
 //
 //class GLSLFragManager : public LoadablesManager<GLSLFragManager, GLSLShader> {
-//public:
-//
 //protected:
-//	void OnLoad(const std::string& filePath) override;
+//	/*AssetUPtr OnLoad(const std::string& filePath) override {
+//		return std::make_unique<GLSLShader>()
+//	}*/
 //};
