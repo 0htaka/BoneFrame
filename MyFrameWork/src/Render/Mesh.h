@@ -66,13 +66,14 @@ public:
 	// Á‹
 	void Clear();
 
-	Mesh(const Mesh&& other) {
+	Mesh(Mesh&& other) = default;
+	/*{
 		materials_ = std::move(other.materials_);
 		subsets_ = std::move(other.subsets_);
 		indices_ = std::move(other.indices_);
 		vertices_ = std::move(other.vertices_);
 		vertexArray_ = std::move(other.vertexArray_);
-	}
+	}*/
 
 	// ƒRƒs[‹Ö~
 	Mesh(const Mesh&) = delete;

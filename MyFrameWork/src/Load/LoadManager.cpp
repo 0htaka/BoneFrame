@@ -8,6 +8,7 @@
 
 void LoadManager::Request(const std::string& filePath) {
 	auto& manager = GetLoadablesManager(IOLoader::GetExtension(filePath));
+	manager.PrepareLoad(filePath);
 	mRequests.emplace(manager, filePath);
 }
 
@@ -48,10 +49,7 @@ void LoadManager::LoadRequests()
 		mRequests.pop();
 	}
 
-#endif // SUB
-
-
-
+#endif // SUB	
 }
 
 bool LoadManager::IsComplete()
@@ -60,21 +58,15 @@ bool LoadManager::IsComplete()
 }
 
 ILoadable & LoadManager::GetLoadablesManager(const std::string& extension) {
-	if (extension == ".mshs") {
-		auto& ins = MeshManager::Ins();
-		ins.CreateAsset();
-		return ins;
-	}
-	if (extension == ".anms") {
-		auto& ins = AnimManager::Ins();
-		ins.CreateAsset();
-		return ins;
-	}
-	if (extension == ".skls") {
-		auto& ins = SkeletonManager::Ins();
-		ins.CreateAsset();
-		return ins;
-	}
+	if (extension == ".mshs")
+		return MeshManager::Ins();
+
+	if (extension == ".anms")
+		return AnimManager::Ins();
+
+	if (extension == ".skls")
+		return SkeletonManager::Ins();
+
 	//if (extension == ".skls")
 	//	return SkeletonManager::Ins();
 }
