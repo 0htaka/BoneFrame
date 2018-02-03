@@ -1,9 +1,9 @@
 #pragma once
 
-#include"Scene\Base\SceneManager.h"
+#include "Framework/Scene/Base/SceneManager.h"
 
-#include <Game/Frame.h>
-#include"Actor/Base/World.h"
+#include "Framework/Frame.h"
+#include "Framework/Actor/Base/World.h"
 
 class Camera;
 class Player;

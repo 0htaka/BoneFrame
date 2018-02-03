@@ -2,8 +2,6 @@
 #include<thread>
 #include<cmath>
 
-//#include<DxLib.h>
-
 using namespace std;
 using namespace chrono;
 

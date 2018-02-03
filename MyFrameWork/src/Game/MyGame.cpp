@@ -1,25 +1,26 @@
 #include"MyGame.h"
 
-#include"Screen\Screen.h"
+#include"Util/Window/Screen/Screen.h"
 #include"Util/Time.h"
-#include"Input\Input.h"
-#include"Scene\Base\SceneManager.h"
+#include"Util/Input/Input.h"
+#include"Framework/Scene/Base/SceneManager.h"
 
-#include"Scene\TestScene.h"
+#include"Framework/Scene/TestScene.h"
 
-#include"Load\LoadManager.h"
-#include"AssetManager\Base\AssetManager.h"
-#include"AssetManager\GLSLFragManager.h"
-#include"AssetManager\GLSLVertManager.h"
+#include"Util/Load/LoadManager.h"
+#include"Util/AssetManager/Base/AssetManager.h"
+#include"Util/AssetManager/GLSLFragManager.h"
+#include"Util/AssetManager/GLSLVertManager.h"
 
-#include "Render/EffectGL.h"
-#include "Render/SkinnedMeshShader.h"
-#include "Render/Mesh.h"
-#include "Render/Skeleton.h"
-#include "Render/Animation.h"
-#include "Render/SkinnedMesh.h"
-#include"Actor\Player.h"
-#include"Actor\Base\Camera\Camera.h"
+#include "Util/Render/EffectGL.h"
+#include "Util/Render/SkinnedMeshShader.h"
+#include "Util/Render/Mesh.h"
+#include "Util/Render/Skeleton.h"
+#include "Util/Render/Animation.h"
+#include "Util/Render/SkinnedMesh.h"
+#include "Framework/Actor/Camera/Camera.h"
+#include "GameObject/Player.h"
+
 
 //using EffectGLManager = AssetManager<EffectGL*>;
 //class EffectGLManager : public AssetManager<EffectGL*> {};
@@ -27,15 +28,12 @@
 MyGame::MyGame()
 	: bonelib::Frame()
 	//: gslib::Game()
-	, m_isEnd(false)
-{
-}
+	, m_isEnd(false) {}
 
 #include<thread>
 #include <GLFW/glfw3.h>
 #include <GL/GLU.h>
-void MyGame::start()
-{
+void MyGame::start() {
 	//各ライブラリ、クラス等の初期化	
 
 	//ロード等、頻繁に使うリソースのロード
@@ -69,11 +67,10 @@ void MyGame::start()
 	mWorld.AddActor(player);
 	mWorld.AddActor(camera);
 
-	camera->SetRotate(camera->GetRotate().Forward(player->GetPosition() + Vector3{ 0, 10, 0 } - camera->GetPosition()));
+	camera->SetRotate(camera->GetRotate().Forward(player->GetPosition() + Vector3{ 0, 10, 0 } -camera->GetPosition()));
 }
 
-void MyGame::update(float deltaTime)
-{
+void MyGame::update(float deltaTime) {
 	//時間の更新
 	Time::Update();
 	//deltaTime = Time::DeltaTime();
@@ -86,8 +83,7 @@ void MyGame::update(float deltaTime)
 	Input::Ins().Update();
 }
 
-void MyGame::draw()
-{
+void MyGame::draw() {
 	//デバッグ用描画
 	Time::Draw();
 
@@ -120,8 +116,7 @@ void MyGame::draw()
 }
 
 
-void MyGame::end()
-{
+void MyGame::end() {
 	m_SceneManager.Finalize();
 
 	delete effect1_;
