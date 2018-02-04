@@ -1,6 +1,7 @@
 #include "GLSLProgram.h"
 #include "GLSLShader.h"
 
+
 GLSLProgram::GLSLProgram() : program_(0) {
 	program_ = glCreateProgram();
 }

@@ -2,7 +2,6 @@
 
 #include"Base/SceneBase.h"
 #include"Base/Scenes.h"
-#include"Game/GameObject/Player.h"
 
 
 class TestScene : public SceneBase

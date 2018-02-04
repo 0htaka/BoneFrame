@@ -1,16 +1,16 @@
-#include"MyGame.h"
+#include "MyGame.h"
 
-#include"Util/Window/Screen/Screen.h"
-#include"Util/Time.h"
-#include"Util/Input/Input.h"
-#include"Framework/Scene/Base/SceneManager.h"
+#include "Util/Window/Screen/Screen.h"
+#include "Util/Time.h"
+#include "Util/Input/Input.h"
+#include "Framework/Scene/Base/SceneManager.h"
 
-#include"Framework/Scene/TestScene.h"
+#include "Framework/Scene/TestScene.h"
 
-#include"Util/Load/LoadManager.h"
-#include"Util/AssetManager/Base/AssetManager.h"
-#include"Util/AssetManager/GLSLFragManager.h"
-#include"Util/AssetManager/GLSLVertManager.h"
+#include "Util/Load/LoadManager.h"
+#include "Util/AssetManager/Base/AssetManager.h"
+#include "Util/AssetManager/GLSLFragManager.h"
+#include "Util/AssetManager/GLSLVertManager.h"
 
 #include "Util/Render/EffectGL.h"
 #include "Util/Render/SkinnedMeshShader.h"
@@ -30,9 +30,6 @@ MyGame::MyGame()
 	//: gslib::Game()
 	, m_isEnd(false) {}
 
-#include<thread>
-#include <GLFW/glfw3.h>
-#include <GL/GLU.h>
 void MyGame::start() {
 	//各ライブラリ、クラス等の初期化	
 

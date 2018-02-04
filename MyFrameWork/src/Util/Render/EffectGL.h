@@ -1,7 +1,6 @@
 #ifndef EFFECT_GL_H_
 #define EFFECT_GL_H_
 
-#include <opengl_ext.h>
 #include <string>
 #include "GLSLProgram.h"
 #include "Util/Math/Vector2.h"

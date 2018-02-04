@@ -1,10 +1,10 @@
 #ifndef GLSL_PROGRAM_H_
 #define GLSL_PROGRAM_H_
 
-#include <opengl_ext.h>
 #include <string>
+#include <opengl_ext.h>
 
-//バーテックス、ピクセルシェーダをコンパイル、リンクするし管理するクラス
+//バーテックス、ピクセルシェーダをコンパイル、リンクし管理するクラス
 class GLSLProgram {
 public:
 	// コンストラクタ

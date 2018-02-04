@@ -1,12 +1,16 @@
 #pragma once
 
 #include "Framework/Actor/Base/Actor.h"
-#include "Util/Render/EffectGL.h"
-#include "Util/Render/SkinnedMeshShader.h"
 #include "Util/Render/Skeleton.h"
 #include "Util/Render/Animation.h"
+#include "Util/Render/SkinnedMeshShader.h"
+
 #include "Util/Render/SkinnedMesh.h"
+#include "Util/Render/EffectGL.h"
 #include "Util/AssetManager/MeshManager.h"
+
+//#include "Util/Render/EffectGL.h"
+//#include "Util/Render/Mesh.h"
 
 class Player : public Actor
 {

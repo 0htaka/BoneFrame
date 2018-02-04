@@ -73,8 +73,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <SourcePath>$(SourcePath)</SourcePath>
-    <IncludePath>C:\GameProgramLibrary\DxLib_VC\プロジェクトに追加すべきファイル_VC用;./src;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\GameProgramLibrary\DxLib_VC\プロジェクトに追加すべきファイル_VC用;$(LibraryPath)</LibraryPath>
+    <IncludePath>./src;$(IncludePath)</IncludePath>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -82,8 +82,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <SourcePath>$(SourcePath)</SourcePath>
-    <IncludePath>C:\GameProgramLibrary\DxLib_VC\プロジェクトに追加すべきファイル_VC用;./src;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\GameProgramLibrary\DxLib_VC\プロジェクトに追加すべきファイル_VC用;$(LibraryPath)</LibraryPath>
+    <IncludePath>./src;$(IncludePath)</IncludePath>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -150,7 +150,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="opengl_ext.c" />
+    <ClCompile Include="src\Util\Render\opengl_ext.c" />
     <ClCompile Include="src\Framework\Actor\Base\Actor.cpp" />
     <ClCompile Include="src\Framework\Actor\Base\ActorManager.cpp" />
     <ClCompile Include="src\Framework\Actor\Camera\Camera.cpp" />
