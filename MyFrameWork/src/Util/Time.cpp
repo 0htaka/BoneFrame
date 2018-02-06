@@ -68,5 +68,5 @@ int Time::TargetFPS()
 
 inline int Time::GetNowEpochTime()
 {
-	return duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
+	return static_cast<int>(duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count());
 }

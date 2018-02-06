@@ -1,6 +1,6 @@
 #pragma once
 
-#include<memory>
+//#include<memory>
 
 template<typename T>
 // QÆæ‚ğ•ÏX‰Â”\‚È const*(new delete‚ª‚Å‚«‚È‚¢)

@@ -1,6 +1,12 @@
 #pragma once
 
 #include <memory>
+#include "Util/RefPtr.h"
+
+template<class T>
+using BonePtr = std::shared_ptr<T>;
+
 class NodeBase;
-using NodeSPtr = std::shared_ptr<NodeBase>;
-using NodeWPtr = std::weak_ptr<NodeBase>;
+using NodePtr = BonePtr<NodeBase>;
+using NodeRPtr = RefPtr<NodeBase>;
+//using NodeWPtr = std::weak_ptr<NodeBase>;

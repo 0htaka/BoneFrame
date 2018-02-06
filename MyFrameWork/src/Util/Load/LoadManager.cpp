@@ -53,6 +53,6 @@ ILoadable & LoadManager::GetLoadablesManager(const std::string& extension) {
 	if (extension == ".skls")
 		return SkeletonManager::Ins();
 
-	//if (extension == ".skls")
-	//	return SkeletonManager::Ins();
+	std::runtime_error("not found asset manager of " + extension);
+	return MeshManager::Ins();
 }

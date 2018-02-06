@@ -39,7 +39,7 @@ public:
 
 	//パスからファイル名を取得
 	std::string GetFileName(const std::string& filePath) const {
-		std::tr2::sys::path path(filePath);
+		std::experimental::filesystem::path path(filePath);
 		std::string fileNmae(path.filename().string());
 		return fileNmae.erase(fileNmae.find_last_of('.'));
 	}

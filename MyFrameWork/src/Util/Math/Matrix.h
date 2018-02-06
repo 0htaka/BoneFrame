@@ -20,7 +20,7 @@ struct Matrix {
 	//任意のベクトルの周囲を回転する新しいマトリックスを作成
 	static Matrix CreateFromAxisAngle(const Vector3 & axis, float degree);
 	//Quaternionから回転Matrixを作成
-	static Matrix Matrix::CreateFromQuaternion(const Quaternion & rotate);
+	static Matrix CreateFromQuaternion(const Quaternion & rotate);
 	//指定した yaw , pich , roll でMatrixを作成
 	static Matrix CreateFromYawPitchRoll(float yaw, float pitch, float roll);
 	//ｘ軸を回転軸として頂点のセットを回転させるために使用できるMatrixを作成
