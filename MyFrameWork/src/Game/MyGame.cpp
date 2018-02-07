@@ -48,12 +48,13 @@ void MyGame::start() {
 	LoadManager::Ins().Request("asset/model/Soldier.mshs");
 	LoadManager::Ins().Request("asset/model/FUCM_04_0001_RHiKick.anms");
 	LoadManager::Ins().Request("asset/model/Soldier.skls");
+	LoadManager::Ins().Request("asset/shader/skinned_mesh_normal.vert");
+	LoadManager::Ins().Request("asset/shader/skinned_mesh_normal.frag");
 	LoadManager::Ins().LoadRequests();
 
 	while (!LoadManager::Ins().IsComplete());
 
-	effect1_ = new EffectGL("asset/shader/skinned_mesh.vert", "asset/shader/skinned_mesh.frag");
-	effect2_ = new EffectGL("asset/shader/skinned_mesh_normal.vert", "asset/shader/skinned_mesh_normal.frag");
+	effect2_ = new EffectGL(GLSLVertManager::Ins().Get("skinned_mesh_normal"), GLSLFragManager::Ins().Get("skinned_mesh_normal"))
 	shader = new SkinnedMeshShader(*effect2_);
 
 	auto uPlayer = std::make_unique<Player>();
