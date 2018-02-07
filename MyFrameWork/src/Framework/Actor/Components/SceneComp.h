@@ -3,8 +3,8 @@
 #include"ComponentBase.h"
 #include"SceneCompPtr.h"
 
-#include"Math/Transform.h"
-#include"Math/Matrix.h"
+#include"Util/Math/Transform.h"
+#include"Util/Math/Matrix.h"
 
 class SceneComp : public ComponentBase {
 public:

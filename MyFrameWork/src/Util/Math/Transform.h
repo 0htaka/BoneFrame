@@ -1,7 +1,7 @@
 #pragma once
 
-#include"Math/Vector3.h"
-#include"Math/Quaternion.h"
+#include"Vector3.h"
+#include"Quaternion.h"
 
 struct Transform
 {

@@ -1,6 +1,6 @@
 #pragma once
 
-#include"NodeBase/NodeBase.h"
+#include"Design/NodeBase/NodeBase.h"
 #include"ComponentBasePtr.h"
 #include"../Base/ActorPtr.h"
 #include"CompManager.h"
@@ -10,7 +10,7 @@ public:
 	ComponentBase();
 	virtual ~ComponentBase();
 	virtual void Update(float deltaTime);
-	void AttachTo(ActorPtr act);
+	void AttachTo(Actor& act);
 
 	ActorPtr GetOwner();
 	CompPtr GetParent() const;
