@@ -1,10 +1,10 @@
 #ifndef _ACTOR_PTR_H_
 #define _ACTOR_PTR_H_
 
-#include<memory>
+#include "Design/NodeBase/NodePtr.h"
 //アクター用のシェアドポインタ
 class Actor;
-using ActorSPtr = std::shared_ptr<Actor>;
+using ActorPtr = BonePtr<Actor>;
 using ActorWPtr = std::weak_ptr<Actor>;
 
 

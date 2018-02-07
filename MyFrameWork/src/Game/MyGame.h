@@ -26,8 +26,8 @@ private:
 	SceneManager m_SceneManager;
 	World mWorld;
 
-	std::shared_ptr<Camera> camera;
-	std::shared_ptr<Player> player;
+	RefPtr<Camera> camera;
+	RefPtr<Player> player;
 
 	//**********************************************
 	// エフェクト

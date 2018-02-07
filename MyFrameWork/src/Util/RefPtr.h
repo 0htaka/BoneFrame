@@ -26,8 +26,8 @@ public:
 		return *p;
 	}
 	// アロー演算子
-	T& operator -> () {
-		return *p;
+	T* operator -> () {
+		return p;
 	}
 	//ポインタ操作	
 	T& operator ++ () {

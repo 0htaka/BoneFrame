@@ -16,9 +16,9 @@ public:
 	//仮想デストラクタ
 	virtual ~IWorld(){}
 	//アクターの追加
-	virtual void AddActor(const ActorSPtr& actor) = 0;	
+	virtual void AddActor(ActorPtr&& actor) = 0;	
 	//アクターの検索
-	virtual ActorSPtr FindActor(const std::string& name) = 0;
+	virtual ActorPtr FindActor(const std::string& name) = 0;
 	
 	//メッセージの送信
 	virtual void Message(EventMessage message, void* param = nullptr) = 0;

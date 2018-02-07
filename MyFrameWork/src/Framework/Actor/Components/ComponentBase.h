@@ -10,9 +10,9 @@ public:
 	ComponentBase();
 	virtual ~ComponentBase();
 	virtual void Update(float deltaTime);
-	void AttachTo(ActorSPtr act);
+	void AttachTo(ActorPtr act);
 
-	ActorSPtr GetOwner();
+	ActorPtr GetOwner();
 	CompPtr GetParent() const;
 protected:
 	ActorWPtr m_Owner;

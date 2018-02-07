@@ -56,13 +56,15 @@ void MyGame::start() {
 	effect2_ = new EffectGL("asset/shader/skinned_mesh_normal.vert", "asset/shader/skinned_mesh_normal.frag");
 	shader = new SkinnedMeshShader(*effect2_);
 
-	player = std::make_shared<Player>();
+	auto uPlayer = std::make_unique<Player>();
+	auto uCamera = std::make_unique<Camera>();
+	player = uPlayer.get();
 	player->SetShader(shader);
-	camera = std::make_shared<Camera>();
+	camera = uCamera.get();
 	camera->SetPosition({ 0.0f,15.0f, 40.0f });
 
-	mWorld.AddActor(player);
-	mWorld.AddActor(camera);
+	mWorld.AddActor(std::move(uPlayer));
+	mWorld.AddActor(std::move(uCamera));
 
 	camera->SetRotate(camera->GetRotate().Forward(player->GetPosition() + Vector3{ 0, 10, 0 } -camera->GetPosition()));
 }

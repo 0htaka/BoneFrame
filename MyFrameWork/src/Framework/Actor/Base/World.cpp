@@ -8,12 +8,12 @@ void World::Update(float deltaTime)
 }
 
 //アクターの追加
-void World::AddActor(const ActorSPtr & actor) {
+void World::AddActor(ActorPtr && actor) {
 	mActors.AddActor(actor);
-	mRoot.AddChild(actor);
+	mRoot.AddChild(std::move(actor));
 }
 
-ActorSPtr World::FindActor(const std::string& name)
+ActorPtr World::FindActor(const std::string& name)
 {
 	return mActors.FindActor(name);
 }

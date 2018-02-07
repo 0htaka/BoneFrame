@@ -14,15 +14,15 @@ public:
 	//コンストラクタ
 	ActorManager();	
 	//アクターの追加
-	void AddActor(const ActorSPtr& actor);
+	void AddActor(const ActorPtr& actor);
 	//アクターの検索
-	ActorSPtr FindActor(const std::string& name);
+	ActorPtr& FindActor(const std::string& name);
 
 	//コピー禁止
 	ActorManager(const ActorManager& other) = delete;
 	ActorManager& operator=(const ActorManager& other) = delete;
 private:
-	std::forward_list<ActorSPtr> mActors;
+	std::forward_list<ActorPtr> mActors;
 };
 
 #endif

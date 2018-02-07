@@ -20,7 +20,7 @@ public:
 	//アップデート（自身、子供）
 	void Update(float deltaTime);
 	//子の追加
-	void AddChild(const NodePtr& child);
+	void AddChild(const NodePtr&& child);
 	//子を巡回
 	void EachChildren(std::function<void(NodeBase&)> fn);
 	//子を巡回(const版)
@@ -36,7 +36,7 @@ public:
 	//子を強制削除する
 	void ClearChildren();
 	//子の検索
-	NodePtr FindNode(std::function<bool(const NodeBase&)>fn);
+	NodePtr& FindNode(std::function<bool(const NodeBase&)>fn);
 	//NodeList FindNodes(std::function<bool(const NodeBase&)>fn);
 
 	NodePtr RemoveChild(std::function<bool(NodePtr&)> fn);

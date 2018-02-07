@@ -9,9 +9,9 @@ class World : public IWorld {
 public:
 	void Update(float deltaTime);
 	//アクターの追加
-	void AddActor(const ActorSPtr& actor) override;
+	void AddActor(ActorPtr&& actor) override;
 	//アクターの検索
-	ActorSPtr FindActor(const std::string& name) override;
+	ActorPtr FindActor(const std::string& name) override;
 
 	//メッセージの送信
 	virtual void Message(EventMessage message, void* param = nullptr) override;
