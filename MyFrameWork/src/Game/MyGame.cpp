@@ -54,7 +54,7 @@ void MyGame::start() {
 
 	while (!LoadManager::Ins().IsComplete());
 
-	effect2_ = new EffectGL(GLSLVertManager::Ins().Get("skinned_mesh_normal"), GLSLFragManager::Ins().Get("skinned_mesh_normal"))
+	effect2_ = new EffectGL(GLSLVertManager::Ins().Get("skinned_mesh_normal"), GLSLFragManager::Ins().Get("skinned_mesh_normal"));
 	shader = new SkinnedMeshShader(*effect2_);
 
 	auto uPlayer = std::make_unique<Player>();

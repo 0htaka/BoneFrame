@@ -4,6 +4,8 @@
 #include <string>
 #include <opengl_ext.h>
 
+class GLSLShader;
+
 //バーテックス、ピクセルシェーダをコンパイル、リンクし管理するクラス
 class GLSLProgram {
 public:

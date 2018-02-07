@@ -9,7 +9,7 @@ EffectGL::EffectGL(const std::string & vertexShaderFileName, const std::string &
 }
 
 EffectGL::EffectGL(GLSLShader & vert, GLSLShader & frag) {
-
+	program_.link(vert, frag);
 }
 
 GLint EffectGL::attribute(const std::string & name) const {
