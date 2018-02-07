@@ -7,12 +7,15 @@ template<typename T>
 class RefPtr {
 public:
 	template<typename ...Args>
-	static RefPtr& make_refptr(Args&& ...args) {
-		p = new T(std::forward<Args>(args)...);
+	static RefPtr make_refptr(Args&& ...args) {
+		RefPtr<T> rptr;
+		rptr.p = new T(std::forward<Args>(args)...);
+		return rptr;
 	}
+private:
+	T * p;
 public:
-	RefPtr(T* ptr = nullptr) : p(ptr) {
-	}
+	RefPtr(T* ptr = nullptr) : p(ptr) {}
 	// 代入演算子
 	RefPtr<T>& operator = (T*& other) {
 		p = other;
@@ -22,11 +25,11 @@ public:
 	T* get() const {
 		return p;
 	}
-	T& operator * () {
+	T& operator * () const {
 		return *p;
 	}
 	// アロー演算子
-	T* operator -> () {
+	T* operator -> () const {
 		return p;
 	}
 	//ポインタ操作	
@@ -54,11 +57,10 @@ public:
 		return !p;
 	}
 	bool operator == (T* other) {
-		p == other;
+		return p == other;
 	}
 	bool operator != (T* other) {
-		p != other;
-	}	
-private:
-	T* p;
+		return p != other;
+	}
+
 };

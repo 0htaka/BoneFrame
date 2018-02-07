@@ -10,6 +10,7 @@ enum class EventMessage;
 using NodeList = std::forward_list<NodePtr>;
 class NodeBase
 {
+	using IDType = unsigned int;
 public:
 	//子の作成
 	template<typename T, typename ...Args>
@@ -20,7 +21,7 @@ public:
 	//アップデート（自身、子供）
 	void Update(float deltaTime);
 	//子の追加
-	void AddChild(const NodePtr&& child);
+	void AddChild(NodePtr&& child);
 	//子を巡回
 	void EachChildren(std::function<void(NodeBase&)> fn);
 	//子を巡回(const版)
@@ -36,10 +37,10 @@ public:
 	//子を強制削除する
 	void ClearChildren();
 	//子の検索
-	NodePtr& FindNode(std::function<bool(const NodeBase&)>fn);
+	NodeRPtr FindNode(std::function<bool(const NodeBase&)>fn);
 	//NodeList FindNodes(std::function<bool(const NodeBase&)>fn);
 
-	NodePtr RemoveChild(std::function<bool(NodePtr&)> fn);
+	NodePtr RemoveChild(std::function<bool(NodePtr&)> fn);	
 
 	//メッセージ処理
 	void HandleMessage(EventMessage message, void* param);
@@ -47,7 +48,9 @@ protected:
 	virtual void OnUpdate(float deltaTime) {}
 private:
 	NodeRPtr mParent{ nullptr };
+	IDType mId{ 0 };
 	NodeList mChildren;
+	IDType mMaxChildId{ 0 };
 	bool mIsDead;
 };
 

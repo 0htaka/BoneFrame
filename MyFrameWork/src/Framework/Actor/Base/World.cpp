@@ -1,7 +1,6 @@
 #include "World.h"
 
-void World::Update(float deltaTime)
-{
+void World::Update(float deltaTime) {
 	mRoot.Update(deltaTime);
 
 	mRoot.RemoveDead();
@@ -9,12 +8,11 @@ void World::Update(float deltaTime)
 
 //アクターの追加
 void World::AddActor(ActorPtr && actor) {
-	mActors.AddActor(actor);
+	mActors.AddActor({ actor.get() });
 	mRoot.AddChild(std::move(actor));
 }
 
-ActorPtr World::FindActor(const std::string& name)
-{
+RefPtr<Actor> World::FindActor(const std::string& name) {
 	return mActors.FindActor(name);
 }
 

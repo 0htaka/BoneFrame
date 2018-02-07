@@ -11,7 +11,7 @@ public:
 	//アクターの追加
 	void AddActor(ActorPtr&& actor) override;
 	//アクターの検索
-	ActorPtr FindActor(const std::string& name) override;
+	RefPtr<Actor> FindActor(const std::string& name) override;
 
 	//メッセージの送信
 	virtual void Message(EventMessage message, void* param = nullptr) override;

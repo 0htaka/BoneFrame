@@ -8,8 +8,9 @@ void NodeBase::Update(float deltaTime) {
 	EachChildren([&deltaTime](NodeBase& actor) { actor.Update(deltaTime); });
 }
 
-void NodeBase::AddChild(const NodePtr && child) {
+void NodeBase::AddChild(NodePtr && child) {
 	child->mParent = this;
+	child->mId = mMaxChildId++;
 	mChildren.push_front(std::move(child));
 }
 
@@ -44,20 +45,20 @@ void NodeBase::ClearChildren() {
 	mChildren.clear();
 }
 
-NodePtr& NodeBase::FindNode(std::function<bool(const NodeBase&)> fn) {
+NodeRPtr NodeBase::FindNode(std::function<bool(const NodeBase&)> fn) {
 	auto& i = std::find_if(mChildren.begin(), mChildren.end(),
 		[&fn](const NodePtr& child) { return fn(*child); });
 	//Žq
 	if (i != mChildren.end())
-		return *i;
+		return NodeRPtr((*i).get());
 
 	//‘·
 	for (auto& child : mChildren) {
 		auto node = child->FindNode(fn);
 		if (node != nullptr)
-			return node;
+			return NodeRPtr(node);
 	}
-	return nullptr;
+	return NodeRPtr(nullptr);
 }
 
 NodePtr NodeBase::RemoveChild(std::function<bool(NodePtr&)> fn) {
