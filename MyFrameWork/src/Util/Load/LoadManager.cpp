@@ -8,6 +8,8 @@
 #include "Util/AssetManager/MeshManager.h"
 #include "Util/AssetManager/AnimManager.h"
 #include "Util/AssetManager/SkeletonManager.h"
+#include "Util/AssetManager/GLSLFragManager.h"
+#include "Util/AssetManager/GLSLVertManager.h"
 
 void LoadManager::Request(const std::string& filePath) {
 	auto& manager = GetLoadablesManager(IOLoader::GetExtension(filePath));
@@ -52,6 +54,12 @@ ILoadable & LoadManager::GetLoadablesManager(const std::string& extension) {
 
 	if (extension == ".skls")
 		return SkeletonManager::Ins();
+
+	if (extension == ".vert")
+		return GLSLVertManager::Ins();
+
+	if (extension == ".frag")
+		return GLSLFragManager::Ins();
 
 	std::runtime_error("not found asset manager of " + extension);
 	return MeshManager::Ins();

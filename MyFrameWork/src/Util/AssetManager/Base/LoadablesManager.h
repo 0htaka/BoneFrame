@@ -7,7 +7,7 @@
 #include <queue>
 
 template<typename Manager, typename Asset>
-class LoadablesManager : public IAssetManager<Manager, Asset>, public ILoadable {
+class LoadablesManagerBase : public IAssetManager<Manager, Asset>, public ILoadable {
 	using Super = IAssetManager<Manager, Asset>;
 public:
 	//アセットをロード、保持
@@ -49,24 +49,16 @@ public:
 
 protected:
 	//ロード時にアセットを加工する必要があればオーバーライド
-	virtual AssetUPtr OnLoad(const std::string& filePath) {
-		return std::make_unique<Asset>(filePath);
-	}
+	virtual AssetUPtr OnLoad(const std::string& filePath) = 0;
 protected:
 	std::mutex mMutex;
 };
 
-//#include "Render/GLSLShader.h"
-//class GLSLVertManager : public LoadablesManager<GLSLVertManager, GLSLShader> {
-//protected:
-//	virtual void OnLoad(const std::string& filePath) {
-//		auto shader = std::make_unique<GLSLShader>(GL_VERTEX_SHADER, filePath);
-//		mAssets.emplace(GetFileName(filePath), std::move(shader));
-//	}
-//};
-//
-//template<>
-//void LoadablesManager<GLSLVertManager, std::unique_ptr<GLSLShader>>::OnLoad(const std::string& filePath) {
-//	//std::make_unique<GLSLShader>(GL_VERTEX_SHADER, filePath);
-//	//mAssets.emplace(GetFileName(filePath), );
-//}
+template<typename Manager, typename Asset>
+class LoadablesManager : public LoadablesManagerBase<Manager, Asset> {
+protected:
+	//ロード時にアセットを加工する必要があればオーバーライド
+	virtual AssetUPtr OnLoad(const std::string& filePath) {
+		return std::make_unique<Asset>(filePath);
+	}
+};

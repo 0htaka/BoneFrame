@@ -4,6 +4,8 @@
 #include <string>
 #include <opengl_ext.h>
 
+class GLSLShader;
+
 //バーテックス、ピクセルシェーダをコンパイル、リンクし管理するクラス
 class GLSLProgram {
 public:
@@ -15,6 +17,8 @@ public:
 	void compileShader(GLenum type, const std::string& fileName);
 	// シェーダーのリンク
 	void link();
+	// シェーダーのリンク
+	void link(GLSLShader& vert, GLSLShader& frag);
 	// プログラムの開始
 	void begin();
 	// プログラムの終了

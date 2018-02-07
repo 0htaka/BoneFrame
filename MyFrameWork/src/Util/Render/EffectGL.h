@@ -13,6 +13,8 @@ class EffectGL {
 public:
 	// コンストラクタ
 	EffectGL(const std::string& vertexShaderFileName, const std::string& fragmentShaderFileName);
+	// コンストラクタ
+	EffectGL(GLSLShader& vert, GLSLShader& frag);
 	// アトリビュートの取得
 	GLint attribute(const std::string& name) const;
 	// シェーダーパラメータの取得

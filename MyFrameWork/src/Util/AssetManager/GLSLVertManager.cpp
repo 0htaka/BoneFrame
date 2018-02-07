@@ -1,6 +1,6 @@
-//#include "GLSLVertManager.h"
-//
-//void GLSLVertManager::OnLoad(const std::string & filePath)
-//{
-//	mAssets.emplace(GetFileName(filePath), GLSLShader(GL_VERTEX_SHADER, filePath));
-//}
+#include "GLSLVertManager.h"
+
+GLSLVertManager::AssetUPtr GLSLVertManager::OnLoad(const std::string & filePath)
+{
+	return std::make_unique<GLSLShader>(GL_VERTEX_SHADER, filePath);	
+}

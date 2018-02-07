@@ -1,11 +1,15 @@
 #include "EffectGL.h"
-
+#include "GLSLShader.h"
 #include <opengl_ext.h>
 
 EffectGL::EffectGL(const std::string & vertexShaderFileName, const std::string & fragmentShaderFileName) {
 	program_.compileShader(GL_VERTEX_SHADER, vertexShaderFileName);
 	program_.compileShader(GL_FRAGMENT_SHADER, fragmentShaderFileName);
 	program_.link();
+}
+
+EffectGL::EffectGL(GLSLShader & vert, GLSLShader & frag) {
+	program_.link(vert, frag);
 }
 
 GLint EffectGL::attribute(const std::string & name) const {
