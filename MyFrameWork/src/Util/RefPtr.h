@@ -1,6 +1,6 @@
 #pragma once
 
-//#include<memory>
+#include<memory>
 
 template<typename T>
 // 参照先を変更可能な const*(new deleteができない)
@@ -16,11 +16,21 @@ private:
 	T * p;
 public:
 	RefPtr(T* ptr = nullptr) : p(ptr) {}
+	RefPtr(std::unique_ptr<T> uptr) : p{ uptr.get() } {}
 	// 代入演算子
-	RefPtr<T>& operator = (T*& other) {
+	RefPtr<T>& operator = (std::nullptr_t null) {
+		p = null;
+		return *this;
+	}
+	RefPtr<T>& operator = (T* other) {
 		p = other;
 		return *this;
 	}
+	RefPtr<T>& operator = (std::unique_ptr<T>& uptr) {
+		p = uptr.get();
+		return *this;
+	}
+
 	//ポインタ取得
 	T* get() const {
 		return p;

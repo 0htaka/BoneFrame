@@ -48,7 +48,7 @@ void NodeBase::ClearChildren() {
 NodeRPtr NodeBase::FindNode(std::function<bool(const NodeBase&)> fn) {
 	auto& i = std::find_if(mChildren.begin(), mChildren.end(),
 		[&fn](const NodePtr& child) { return fn(*child); });
-	//Žq
+	//Žq	
 	if (i != mChildren.end())
 		return NodeRPtr((*i).get());
 

@@ -1,8 +1,6 @@
 #include "MyGame.h"
 
 #include "Util/Window/Screen/Screen.h"
-#include "Util/Time.h"
-#include "Util/Input/Input.h"
 #include "Framework/Scene/Base/SceneManager.h"
 
 #include "Framework/Scene/TestScene.h"
@@ -21,13 +19,10 @@
 #include "Framework/Actor/Camera/Camera.h"
 #include "GameObject/Player.h"
 
-
-//using EffectGLManager = AssetManager<EffectGL*>;
-//class EffectGLManager : public AssetManager<EffectGL*> {};
 #include"Util/RefPtr.h"
+
 MyGame::MyGame()
 	: bonelib::Frame()
-	//: gslib::Game()
 	, m_isEnd(false) {}
 
 void MyGame::start() {
@@ -39,10 +34,7 @@ void MyGame::start() {
 	m_SceneManager.Add(Scenes::GamePlay, std::make_shared<TestScene>());
 
 	//最初のシーンを設定	
-	m_SceneManager.Change(Scenes::GamePlay);
-
-	// deltaTime を管理するクラスの初期化
-	Time::Init();
+	m_SceneManager.Change(Scenes::GamePlay);	
 
 	/*:::::::::::::::::::::::::::::::::::::::::::::*/
 	LoadManager::Ins().Request("asset/model/Soldier.mshs");
@@ -71,22 +63,13 @@ void MyGame::start() {
 }
 
 void MyGame::update(float deltaTime) {
-	//時間の更新
-	Time::Update();
-	//deltaTime = Time::DeltaTime();
-
 	//シーン更新
 	m_SceneManager.Update(deltaTime);
 
-	mWorld.Update(deltaTime);
-
-	Input::Ins().Update();
+	mWorld.Update(deltaTime);	
 }
 
 void MyGame::draw() {
-	//デバッグ用描画
-	Time::Draw();
-
 	//シーン描画
 	m_SceneManager.Draw();
 
@@ -103,16 +86,14 @@ void MyGame::draw() {
 
 	EffectGL* effect = effect1_;
 
-	shader->world(world);
+	//shader->world(world);
+	shader->world(player->GetPose());
 	shader->view(view);
 	shader->projection(projection);
 	shader->light(light);
 
 	//// メッシュの描画
 	player->TempDraw(world, view, projection, light);
-
-	//フレーム固定
-	//Time::Wait();
 }
 
 

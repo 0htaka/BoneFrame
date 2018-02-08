@@ -33,10 +33,10 @@ public:
 		mSkinnedMesh.draw(*mShader);
 	}
 	void TempDraw(Matrix world, Matrix view, Matrix projection, Light light) const {
-		mShader->world(world);
+		/*mShader->world(world);
 		mShader->view(view);
 		mShader->projection(projection);
-		mShader->light(light);
+		mShader->light(light);*/
 
 		mSkinnedMesh.draw(*mShader);
 	}

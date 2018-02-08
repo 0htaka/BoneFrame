@@ -1,8 +1,8 @@
 #pragma once
 
 #include "Util/Window/Device.h"
-
 #include "Util/Time.h"
+#include "Util/Input/Input.h"
 
 namespace bonelib {
 
@@ -26,8 +26,8 @@ namespace bonelib {
 			Time::Init();
 			start();
 			while (!mDevice.isClose() && isRunning()) {
-				//while (isRunning()) {
 				Time::Update();
+				Input::Ins().Update();
 				//update(60.0f / fps_);
 				update(Time::DeltaTime());
 				draw();
