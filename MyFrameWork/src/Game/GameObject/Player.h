@@ -9,25 +9,17 @@
 #include "Util/Render/EffectGL.h"
 #include "Util/AssetManager/MeshManager.h"
 
-//#include "Util/Render/EffectGL.h"
-//#include "Util/Render/Mesh.h"
-
 class Player : public Actor
 {
 public:
 	Player()
 		: mSkinnedMesh{ mMesh, mSkeleton, mAnimation }
-		, mAnimTimer(0.0f)
-		, mMesh{ MeshManager::Ins().Get("Soldier") }
-	{
-		//mMesh.Load("asset/model/Soldier.mshs");
-		//Mesh mesh;
-		//mesh.Load("asset/model/Soldier.mshs");
+		, mAnimTimer(0.0f)		
+		, mMesh{ MeshManager::Ins().Get("Soldier") } {		
 		mSkeleton.Load("asset/model/Soldier.skls");
 		mAnimation.Load("asset/model/Y_Bot@jump.anms");
 	}
-	~Player() {
-	}
+	~Player() {}
 	void OnUpdate(float deltaTime) override;
 	void OnDraw() const {
 		mSkinnedMesh.draw(*mShader);
@@ -45,7 +37,7 @@ public:
 	}
 private:
 	// メッシュクラス
-	Mesh&			mMesh;
+	Mesh & mMesh;
 	// スケルトンクラス
 	Skeleton		mSkeleton;
 	// アニメーションクラス

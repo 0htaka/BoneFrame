@@ -38,8 +38,10 @@ void MyGame::start() {
 
 	/*:::::::::::::::::::::::::::::::::::::::::::::*/
 	LoadManager::Ins().Request("asset/model/Soldier.mshs");
+	LoadManager::Ins().Request("asset/model/Monster3.mshs");
 	LoadManager::Ins().Request("asset/model/FUCM_04_0001_RHiKick.anms");
 	LoadManager::Ins().Request("asset/model/Soldier.skls");
+	LoadManager::Ins().Request("asset/model/Monster3.skls");
 	LoadManager::Ins().Request("asset/shader/skinned_mesh_normal.vert");
 	LoadManager::Ins().Request("asset/shader/skinned_mesh_normal.frag");
 	LoadManager::Ins().LoadRequests();
@@ -53,6 +55,7 @@ void MyGame::start() {
 	auto uCamera = std::make_unique<Camera>();
 	player = uPlayer.get();
 	player->SetShader(shader);
+	player->SetPosition({ 0,0,0 });
 	camera = uCamera.get();
 	camera->SetPosition({ 0.0f,15.0f, 40.0f });
 

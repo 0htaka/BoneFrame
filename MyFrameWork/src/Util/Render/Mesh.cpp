@@ -16,6 +16,13 @@ Mesh::Mesh(const std::string & filePath) {
 // デストラクタ
 Mesh::~Mesh() {
 	Clear();
+	//バッファを削除
+	glDeleteVertexArrays(1, &vertexArray_);
+	vertexArray_ = 0;
+	glDeleteBuffers(1, &vertices_);
+	vertices_ = 0;
+	glDeleteBuffers(1, &indices_);
+	indices_ = 0;
 }
 
 #include<GL/GLU.h>
@@ -23,13 +30,14 @@ void Mesh::Draw(Mesh::Shader& shader) const {
 	// 頂点配列のバインド
 	glBindVertexArray(vertexArray_);
 
-	for (auto&& subset : subsets_) {
+	for (auto& subset : subsets_) {
 		// マテリアルの設定
 		shader.material(materials_[subset.material]);
 		// ポリゴンを描画する
 		shader.begin();
 		const GLushort* base = nullptr;
-		glDrawElements(GL_TRIANGLES, subset.count, GL_UNSIGNED_SHORT, &base[subset.start]);
+		//glDrawElements(GL_TRIANGLES, subset.count, GL_UNSIGNED_SHORT, &base[subset.start]);
+		glDrawElements(GL_TRIANGLES, subset.count, GL_UNSIGNED_SHORT, nullptr);		
 		shader.end();
 	}
 	glBindVertexArray(0);
@@ -37,12 +45,14 @@ void Mesh::Draw(Mesh::Shader& shader) const {
 
 // ファイルの読み込み
 void Mesh::Load(const std::string & file_name) {
-	if (!materials_.empty() || !subsets_.empty())
-		throw std::runtime_error("Mesh instance has already loaded. try to load new file " + file_name);
-
+	/*if (!materials_.empty() || !subsets_.empty())
+		throw std::runtime_error("Mesh instance has already loaded. try to load new file " + file_name);*/	
 	std::ifstream file(file_name, std::ios::binary);
 	if (!file)
 		throw std::runtime_error("can not open " + file_name);
+
+	//念の為クリア
+	Clear();
 
 	// マテリアルの読み込み
 	unsigned int material_size = 0;
@@ -88,13 +98,7 @@ void Mesh::Clear() {
 	for (auto&& mat : materials_) {
 		glDeleteTextures(1, &mat.texture);
 	}
-	materials_.clear();
-	glDeleteVertexArrays(1, &vertexArray_);
-	vertexArray_ = 0;
-	glDeleteBuffers(1, &vertices_);
-	vertices_ = 0;
-	glDeleteBuffers(1, &indices_);
-	indices_ = 0;
+	materials_.clear();	
 }
 
 // テクスチャの読み込み
