@@ -25,19 +25,26 @@ public:
 	// コンストラクタ
 	Animation();
 	Animation(const std::string& filePath);
+	void Update(float deltaSec);
 	// キーフレームの取得
-	KeyFrame GetKeyFrame(const std::string& boneName, float frameNo) const;
+	KeyFrame GetKeyFrame(const std::string& boneName, float frameNo) const;	
 	// 消去
 	void Clear();
 	// ファイルから読み込む
 	void Load(const std::string& fileName);
 	// 終了フレーム数を返す
 	float EndTime() const;
+	//再生位置
+	float CurrentTime() const;
 private:
 	// ボーンキーフレーム
 	std::unordered_map<std::string, std::vector<KeyFrame>> mBoneKeyFrames;
 	//アニメーションのサンプル数
-	int FPS{ 30 };
+	int FPS{ 60 };
+	//アニメーションフレーム数
+	float mFrameNum{ 0 };
+	//アニメーションタイマ
+	float mPlayTimer{ 0 };
 };
 
 #endif

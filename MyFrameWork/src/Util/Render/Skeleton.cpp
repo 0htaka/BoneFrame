@@ -2,8 +2,7 @@
 #include "Animation.h"
 #include <fstream>
 
-Skeleton::Skeleton() {
-}
+Skeleton::Skeleton() {}
 
 Skeleton::Skeleton(const std::string & filePath) {
 	Load(filePath);
@@ -13,9 +12,10 @@ std::size_t Skeleton::Size() const {
 	return bones_.size();
 }
 
-void Skeleton::CalculateLocalMatrices(const Animation & animation, float animTime, Matrix local[]) const {
+void Skeleton::CalculateLocalMatrices(Animation & animation, float deltaSec, Matrix local[]) const {
+	animation.Update(deltaSec);	
 	for (const auto& bone : bones_) {
-		local[bone.ID] = animation.GetKeyFrame(bone.name, animTime).matrix();
+		local[bone.ID] = animation.GetKeyFrame(bone.name, animation.CurrentTime()).matrix();
 	}
 }
 
@@ -40,14 +40,13 @@ void Skeleton::Clear() {
 }
 
 // ÉtÉ@ÉCÉãÇÃì«Ç›çûÇ›
-void Skeleton::Load(const std::string & fileName) 
-{
+void Skeleton::Load(const std::string & fileName) {
 	std::ifstream file(fileName, std::ios::binary);
 	if (!file) {
 		throw std::runtime_error("can not open " + fileName);
 	}
 	Clear();
-	unsigned int skeleton_size = 0;	
+	unsigned int skeleton_size = 0;
 	file.read((char*)&skeleton_size, sizeof(skeleton_size));
 	bones_.resize(skeleton_size);
 	file.read((char*)bones_.data(), sizeof(Bone) * skeleton_size);

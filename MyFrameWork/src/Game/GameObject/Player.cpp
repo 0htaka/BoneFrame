@@ -4,7 +4,7 @@ void Player::OnUpdate(float deltaTime) {
 	mAnimTimer += deltaTime;
 	if (mAnimTimer >= mAnimation.EndTime())
 		mAnimTimer = 0.0f;
-	mSkinnedMesh.caluclate(GetPose(), mAnimTimer);
+	mSkinnedMesh.caluclate(GetPose(), deltaTime);
 
 	Vector3 velocity;
 	if (Input::Ins().mKeys.GetKeyState(VK_UP)) {

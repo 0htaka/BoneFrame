@@ -213,6 +213,8 @@
     <ClInclude Include="src\Util\AssetManager\Base\IAssetManager.h" />
     <ClInclude Include="src\Util\AssetManager\GLSLFragManager.h" />
     <ClInclude Include="src\Util\AssetManager\GLSLVertManager.h" />
+    <ClInclude Include="src\Util\Render\AnimationManager.h" />
+    <ClInclude Include="src\Util\Render\Material.h" />
     <ClInclude Include="src\Util\Window\Device.h" />
     <ClInclude Include="src\Util\Window\Window.h" />
     <ClInclude Include="src\Framework\Frame.h" />

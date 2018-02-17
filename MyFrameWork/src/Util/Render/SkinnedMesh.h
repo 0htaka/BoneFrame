@@ -33,7 +33,7 @@ private:
 	// スケルトン
 	const Skeleton*		skeleton_;
 	// アニメーション
-	const Animation*	animation_;
+	Animation*	animation_;	
 	// ローカル変換行列
 	Matrix			localMatrices_[BONE_MAX];
 	// ワールド変換行列

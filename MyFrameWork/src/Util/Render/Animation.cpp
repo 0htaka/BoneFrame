@@ -1,5 +1,6 @@
 // Animation.cpp
 #include "Animation.h"
+#include "Util/Math/MathHelper.h"
 #include <fstream>
 #include <algorithm>
 #include "Util/Time.h"
@@ -7,16 +8,26 @@
 inline std::pair<int, int> findKeyFrameSegment(const std::vector<Animation::KeyFrame>& keys, float deltaSec);
 
 // コンストラクタ
-Animation::Animation() {
-}
+Animation::Animation() {}
 
 Animation::Animation(const std::string & filePath) {
 	Load(filePath);
 }
 
+void Animation::Update(float deltaSec) {
+	mPlayTimer += deltaSec;
+	if (mPlayTimer > EndTime())
+		mPlayTimer = 0;
+}
+
 // 指定ボーンのアニメーション変換行列を求める
 Animation::KeyFrame Animation::GetKeyFrame(const std::string& boneName, float deltaSec) const {
-	float frameNo = deltaSec * Time::TargetFPS();
+	//mPlayTimer += deltaSec;
+	//if (mPlayTimer > EndTime())
+	//	mPlayTimer = 0;
+	const auto gameFPS = Time::TargetFPS();
+	//float frameNo = mPlayTimer * gameFPS * (FPS / gameFPS);
+	float frameNo = deltaSec * gameFPS * (FPS / gameFPS);
 	const auto keys = mBoneKeyFrames.find(boneName);
 	KeyFrame result;
 	if (keys == mBoneKeyFrames.end()) {
@@ -67,15 +78,21 @@ void Animation::Load(const std::string& fileName) {
 		unsigned int temp = sizeof(KeyFrame) * key_frame_size;
 		file.read((char*)mBoneKeyFrames[bone_name].data(), sizeof(KeyFrame) * key_frame_size);
 	}
+
+	//アニメーション最終フレーム取得
+	for (const auto& keys : mBoneKeyFrames) {
+		mFrameNum = std::max(mFrameNum, keys.second.back().frameNo);
+	}
 }
 
 // 終了フレーム数を返す
 float Animation::EndTime() const {
-	float result = 0.0f;
-	for (const auto& keys : mBoneKeyFrames) {
-		result = std::max(result, keys.second.back().frameNo);
-	}
-	return result / Time::TargetFPS();
+	const auto gameFPS = Time::TargetFPS();
+	return mFrameNum / gameFPS * (gameFPS / FPS);
+}
+
+float Animation::CurrentTime() const {
+	return mPlayTimer;
 }
 
 // 変換行列を計算する

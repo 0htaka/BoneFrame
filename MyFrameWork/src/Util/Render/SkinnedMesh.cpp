@@ -9,9 +9,9 @@ SkinnedMesh::SkinnedMesh(Mesh & mesh, Skeleton & skeleton, Animation & animation
 }
 
 // 計算
-void SkinnedMesh::caluclate(const Matrix& world, float animTime) {
+void SkinnedMesh::caluclate(const Matrix& world, float dt) {
 	// アニメーション変換行列の計算
-	skeleton_->CalculateLocalMatrices(*animation_, animTime, localMatrices_);
+	skeleton_->CalculateLocalMatrices(*animation_, dt, localMatrices_);
 	// ワールド変換行列の計算
 	skeleton_->CalculateWorldMatrices(world, localMatrices_, worldMatrices_);
 	// スキニング用の変換行列の計算

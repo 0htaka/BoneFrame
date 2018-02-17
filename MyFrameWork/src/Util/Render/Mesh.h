@@ -10,18 +10,6 @@
 #include "Util/Math/Vector3.h"
 #include "Util/Math/Color.h"
 
-struct MyMaterial {
-	Color		ambient;						// 環境光カラー
-	Color		diffuse;						// 拡散反射光カラー
-	Color		specular;						// 鏡面反射光カラー
-	Color		emission;						// 自己照明カラー
-	float		shiniess;						// 鏡面反射指数
-	//char		texture_file_name[128];			// テクスチャファイル名
-	//char		normal_texture_file_name[128];	// 法線マップテクスチャファイル名
-	GLuint		texture;						// テクスチャオブジェクト
-	GLuint		normal_texture;					// 法線マップテクスチャオブジェクト
-};
-
 class Mesh {
 public:
 	// マテリアル構造体
