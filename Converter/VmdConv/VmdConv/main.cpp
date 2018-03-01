@@ -22,7 +22,7 @@ BoneFrame create_bone_frame(const mmd::vmd::VMDFile& vmd) {
 	BoneFrame result;
 	//ボーン名毎にキーフレームを作成
 	for (const auto& motion : vmd.motions)
-	{
+	{		
 		result[motion.bone_name].push_back(motion);
 	}
 	//フレーム番号順にソート

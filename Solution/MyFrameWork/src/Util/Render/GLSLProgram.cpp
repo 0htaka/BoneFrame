@@ -40,6 +40,7 @@ void GLSLProgram::link(GLSLShader & vert, GLSLShader & frag) {
 	// シェーダーのアタッチ
 	glAttachShader(program_, frag.shader());
 	link();
+	
 }
 
 void GLSLProgram::begin() {

@@ -50,7 +50,7 @@ void GLSLShader::compile(const std::string & fileName) {
 
 std::vector<char> GLSLShader::load(const std::string & fileName) {
 	std::ifstream file(fileName, std::ios::binary);
-	if (!file) 
+	if (!file)
 		throw std::runtime_error("can not open" + fileName);
 	// ファイルサイズの取得
 	file.seekg(0, std::ios_base::end);
@@ -58,6 +58,7 @@ std::vector<char> GLSLShader::load(const std::string & fileName) {
 	file.seekg(0, std::ios_base::beg);
 	// シェーダーファイルをバッファに読み込む
 	std::vector<char> program(size);
+	char* temp = &program[size - 1];
 	file.read(program.data(), size);
 	return program;
 }

@@ -342,4 +342,7 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="asset\shader\test_skinmesh.frag" />
+  </ItemGroup>
 </Project>

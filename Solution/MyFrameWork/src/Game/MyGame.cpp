@@ -24,7 +24,8 @@
 MyGame::MyGame()
 	: bonelib::Frame()
 	, m_isEnd(false) {}
-
+Player* ptest;
+SkinnedMeshShader* stest;
 void MyGame::start() {
 	//各ライブラリ、クラス等の初期化	
 
@@ -34,7 +35,7 @@ void MyGame::start() {
 	m_SceneManager.Add(Scenes::GamePlay, std::make_shared<TestScene>());
 
 	//最初のシーンを設定	
-	m_SceneManager.Change(Scenes::GamePlay);	
+	m_SceneManager.Change(Scenes::GamePlay);
 
 	/*:::::::::::::::::::::::::::::::::::::::::::::*/
 	LoadManager::Ins().Request("asset/model/Soldier.mshs");
@@ -44,12 +45,20 @@ void MyGame::start() {
 	LoadManager::Ins().Request("asset/model/Monster3.skls");
 	LoadManager::Ins().Request("asset/shader/skinned_mesh_normal.vert");
 	LoadManager::Ins().Request("asset/shader/skinned_mesh_normal.frag");
+	LoadManager::Ins().Request("asset/shader/test_skinmesh.frag");
 	LoadManager::Ins().LoadRequests();
 
 	while (!LoadManager::Ins().IsComplete());
 
-	effect2_ = new EffectGL(GLSLVertManager::Ins().Get("skinned_mesh_normal"), GLSLFragManager::Ins().Get("skinned_mesh_normal"));
-	shader = new SkinnedMeshShader(*effect2_);
+	effect1_ = new EffectGL(GLSLVertManager::Ins().Get("skinned_mesh_normal"), GLSLFragManager::Ins().Get("skinned_mesh_normal"));
+	effect2_ = new EffectGL(GLSLVertManager::Ins().Get("skinned_mesh_normal"), GLSLFragManager::Ins().Get("test_skinmesh"));
+	shader = new SkinnedMeshShader(*effect1_);
+	stest = new SkinnedMeshShader(*effect2_);
+
+	std::unique_ptr<Player> temp(new Player());	
+	temp->SetShader(stest);
+	temp->SetPosition({ 3, 0, 0 });
+	ptest = temp.get();
 
 	auto uPlayer = std::make_unique<Player>();
 	auto uCamera = std::make_unique<Camera>();
@@ -58,18 +67,18 @@ void MyGame::start() {
 	player->SetPosition({ 0,0,0 });
 	camera = uCamera.get();
 	camera->SetPosition({ 0.0f,15.0f, 40.0f });
+	camera->SetRotate(camera->GetRotate().Forward(ptest->GetPosition() + Vector3{ 0, 10, 0 } -camera->GetPosition()));
 
 	mWorld.AddActor(std::move(uPlayer));
-	mWorld.AddActor(std::move(uCamera));
-
-	camera->SetRotate(camera->GetRotate().Forward(player->GetPosition() + Vector3{ 0, 10, 0 } -camera->GetPosition()));
+	mWorld.AddActor(std::move(temp));
+	mWorld.AddActor(std::move(uCamera));	
 }
 
 void MyGame::update(float deltaTime) {
 	//シーン更新
 	m_SceneManager.Update(deltaTime);
 
-	mWorld.Update(deltaTime);	
+	mWorld.Update(deltaTime);
 }
 
 void MyGame::draw() {
@@ -87,16 +96,20 @@ void MyGame::draw() {
 	Light light;
 	light.position = { 100.0f, 100.0f, 100.0f };
 
-	EffectGL* effect = effect1_;
-
 	//shader->world(world);
 	shader->world(player->GetPose());
 	shader->view(view);
 	shader->projection(projection);
 	shader->light(light);
-
 	//// メッシュの描画
 	player->TempDraw(world, view, projection, light);
+
+	stest->world(ptest->GetPose());
+	stest->view(view);
+	stest->projection(projection);
+	stest->light(light);
+	
+	ptest->TempDraw(world, view, projection, light);
 }
 
 
