@@ -18,8 +18,7 @@ public:
 		virtual void boneMetrices(int size, const Matrix matrices[]) = 0;
 	};
 public:
-	// コンストラクタ
-	SkinnedMesh(Mesh& mesh, Skeleton& skeleton, Animation& animation);
+	SkinnedMesh(Mesh& mesh, Skeleton& skeleton, Animation& animation);	
 	// 計算
 	void caluclate(const Matrix& world, float deltSec);
 	// 描画

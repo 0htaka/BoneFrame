@@ -65,7 +65,7 @@ Quaternion Quaternion::Slerp(const Quaternion & q1, const Quaternion & q2, float
 }
 
 Quaternion Quaternion::CreateFromRotationMatrix(const Matrix & m)
-{//0622
+{
 	Quaternion result;
 	float tr = m.m[0][0] + m.m[1][1] + m.m[2][2] + m.m[3][3];
 	if (tr >= 1.0f) {

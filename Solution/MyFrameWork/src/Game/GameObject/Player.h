@@ -14,8 +14,8 @@ class Player : public Actor
 public:
 	Player()
 		: mSkinnedMesh{ mMesh, mSkeleton, mAnimation }
-		, mAnimTimer(0.0f)		
-		, mMesh{ MeshManager::Ins().Get("Soldier") } {		
+		, mAnimTimer(0.0f)
+		, mMesh{ MeshManager::Ins().Get("Soldier") } {
 		mSkeleton.Load("asset/model/Soldier.skls");
 		mAnimation.Load("asset/model/Y_Bot@jump.anms");
 	}
