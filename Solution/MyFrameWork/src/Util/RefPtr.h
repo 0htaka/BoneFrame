@@ -5,13 +5,6 @@
 template<typename T>
 // QÆæ‚ğ•ÏX‰Â”\‚È const*(new delete‚ª‚Å‚«‚È‚¢)
 class RefPtr {
-public:
-	template<typename ...Args>
-	static RefPtr make_refptr(Args&& ...args) {
-		RefPtr<T> rptr;
-		rptr.p = new T(std::forward<Args>(args)...);
-		return rptr;
-	}
 private:
 	T * p;
 public:
@@ -72,5 +65,4 @@ public:
 	bool operator != (T* other) {
 		return p != other;
 	}
-
 };

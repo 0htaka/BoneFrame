@@ -28,6 +28,6 @@ public:
 private:
 	ILoadable& GetLoadablesManager(const std::string& extension);
 private:
-	std::queue<Item> mRequests;
-	std::thread mThread;
+	std::queue<Item> _requests;
+	std::thread _thread;
 };

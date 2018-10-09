@@ -13,8 +13,8 @@ class NodeBase
 	using IDType = unsigned int;
 public:
 	//éqÇÃçÏê¨
-	template<typename T, typename ...Args>
-	static BonePtr<T>& Make(Args&&... args);
+	template<typename T, typename ...TArgs>
+	static BonePtr<T>& Make(TArgs&&... args);
 public:
 	NodeBase();
 	virtual ~NodeBase() {}
@@ -54,7 +54,7 @@ private:
 	bool mIsDead;
 };
 
-template<typename T, typename ...Args>
-inline BonePtr<T> & NodeBase::Make(Args && ...args) {
-	return std::make_shared<T>(std::forward<Args>(args)...);
+template<typename T, typename ...TArgs>
+inline BonePtr<T> & NodeBase::Make(TArgs && ...args) {
+	return std::make_shared<T>(std::forward<TArgs>(args)...);
 }

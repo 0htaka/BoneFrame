@@ -150,6 +150,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Util\Function\Delegate.cpp" />
     <ClCompile Include="src\Util\Render\opengl_ext.c" />
     <ClCompile Include="src\Framework\Actor\Base\Actor.cpp" />
     <ClCompile Include="src\Framework\Actor\Base\ActorManager.cpp" />
@@ -193,6 +194,8 @@
     <ClCompile Include="src\Util\Window\Screen\Screen.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Design\NonCopyable.h" />
+    <ClInclude Include="src\Util\Function\Delegate.h" />
     <ClInclude Include="src\Framework\Actor\Base\Actor.h" />
     <ClInclude Include="src\Framework\Actor\Base\ActorGroup.h" />
     <ClInclude Include="src\Framework\Actor\Base\ActorManager.h" />
@@ -215,6 +218,7 @@
     <ClInclude Include="src\Util\AssetManager\GLSLVertManager.h" />
     <ClInclude Include="src\Util\Render\AnimationManager.h" />
     <ClInclude Include="src\Util\Render\Material.h" />
+    <ClInclude Include="src\Util\Type\TypeTraits.h" />
     <ClInclude Include="src\Util\Window\Device.h" />
     <ClInclude Include="src\Util\Window\Window.h" />
     <ClInclude Include="src\Framework\Frame.h" />

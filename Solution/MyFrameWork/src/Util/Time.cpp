@@ -2,71 +2,68 @@
 #include<thread>
 #include<cmath>
 
-using namespace std;
-using namespace chrono;
+using namespace std::chrono;
 
-int				Time::mFPS = 60;
-float			Time::mDeltaTime = 0;
-int				Time::mStartTime;
-int				Time::mPreTime;
+int				Time::_targetFps = 60;
+float			Time::_deltaTime = 0;
+Time::TimePoint	Time::_startTime;
+Time::TimePoint	Time::_preTime;
+float			Time::_waitBorder = 0;
 
-void Time::Init(int TargetFPS)
-{
-	mFPS = TargetFPS;
+void Time::Init(int TargetFPS) {
+	_targetFps = TargetFPS;
+	_waitBorder = (1.f / _targetFps) / 500.f;
 
-	mStartTime = GetNowEpochTime();
-	mPreTime = mStartTime;
+	_deltaTime = 1.0f / _targetFps;
+	_startTime = GetCurrentTime();
+	_preTime = _startTime;
 }
 
-void Time::Update()
-{
+void Time::Update() {
 	//処理に要した時間をミリ秒に変換
-	mPreTime = mStartTime;
-	mStartTime = GetNowEpochTime();
+	_preTime = _startTime;
+	_startTime = GetCurrentTime();
 
-	mDeltaTime = (mStartTime - mPreTime) / 1000.0f;
+	_deltaTime = duration_cast<Sec>(_startTime - _preTime).count();
 }
 
-//#include<gslib.h>
-#include<string>
-void Time::Draw()
-{	
-	string temp = std::to_string(mDeltaTime) + "\n";
-	//OutputDebugString(temp.c_str());
+float Time::TookSec() {
+	// updateが呼ばれてからの所要時間
+	auto tookTime = GetCurrentTime() - _startTime;
+	return duration_cast<Sec>(tookTime).count();
 }
 
-float Time::DeltaTime()
-{
-	return mDeltaTime;
-}
+bool Time::Wait() {
+	// 目標FPS時 deltaTime
+	float targetDelta = 1.0f / _targetFps;
+	float tookSec = TookSec();
 
-bool Time::Wait()
-{
-	//実際に処理にかかった時間
-	auto tookTime = GetNowEpochTime() - mStartTime;
-	//目標FPS時の deltaTime を計算
-	int targetDT = (int)std::ceilf(1000.0f / mFPS);
-
-	//目標との差分
-	int waitTime = targetDT - tookTime;
-
-	if (waitTime > (1.0f / mFPS) * 1000) {
-		//時間が余っていればスリープ
-		this_thread::sleep_for(milliseconds(waitTime));
-		/*DrawFormatString(0, 16, GetColor(255, 255, 255)
-		, "waiteTime = %f"
-		, waitTime / 1000.0f);*/
+	// 目標との差分
+	float waitTime = targetDelta - tookSec;
+	if (waitTime > _waitBorder) {
+		//if (waitTime > 0) {
+			// 時間が余っていればスリープ
+		std::this_thread::sleep_for(Sec(waitTime - _waitBorder));
 		return true;
 	}
 	return false;
 }
 
-int Time::TargetFPS()
-{
-	return mFPS;
+float Time::DeltaSec() {
+	return _deltaTime;
 }
 
-inline int Time::GetNowEpochTime()
-{
-	return static_cast<int>(duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count());
+
+int Time::TargetFPS() {
+	return _targetFps;
+}
+
+int Time::CurrentFPS() {
+	return _deltaTime > std::numeric_limits<float>::epsilon()
+		? int(1 / _deltaTime)
+		: TargetFPS();
+}
+
+Time::TimePoint Time::GetCurrentTime() {
+	return Clock::now();
 }

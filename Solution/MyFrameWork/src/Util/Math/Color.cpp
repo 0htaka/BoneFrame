@@ -6,8 +6,7 @@
 const Color Color::Black(0.0f, 0.0f, 0.0f, 1.0f);			// Color(0,  0,  0, 1)
 const Color Color::White(1.0f, 1.0f, 1.0f, 1.0f);			// Color(1,  1,  1, 1)
 
-Color::Color(float r, float g, float b, float a) : r(r), g(g), b(b), a(a) {
-}
+Color::Color(float r, float g, float b, float a) : r(r), g(g), b(b), a(a) {}
 
 Color Color::Lerp(const Color& value1, const Color& value2, float amount) {
 	return Color(

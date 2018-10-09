@@ -4,7 +4,7 @@
 class Mathf
 {
 public:
-	static const float Pi;
+	static constexpr float Pi = 3.14159265358979f;	
 	static float Clamp(float value, float min, float max);
 	static float Distance(float n1, float n2);
 	static float Lerp(float value1, float value2, float amount);

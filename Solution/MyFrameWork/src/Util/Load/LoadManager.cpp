@@ -14,7 +14,7 @@
 void LoadManager::Request(const std::string& filePath) {
 	auto& manager = GetLoadablesManager(IOLoader::GetExtension(filePath));
 	manager.PrepareLoad(filePath);
-	mRequests.emplace(manager, filePath);
+	_requests.emplace(manager, filePath);
 }
 
 void LoadManager::LoadRequests() {
@@ -23,26 +23,26 @@ void LoadManager::LoadRequests() {
 		throw std::runtime_error("can't create sub window");
 
 	////非同期処理
-	std::thread t([&]() {
+	std::thread t([this, subWin]() {
 		glfwMakeContextCurrent(subWin);
-		while (!mRequests.empty())
+		while (!_requests.empty())
 		{
-			auto& item = mRequests.front();
+			auto& item = _requests.front();
 			item.manager.Load(item.path);
-			mRequests.pop();
+			_requests.pop();
 		}
 		//作成したウィンドウの削除
-		glfwMakeContextCurrent(nullptr);		
+		glfwMakeContextCurrent(nullptr);
 		//glfwDestroyWindow(subWin);
 
 		//処理終了後デタッチ
-		mThread.detach();
+		_thread.detach();
 	});
-	mThread = std::move(t);
+	_thread = std::move(t);
 }
 
 bool LoadManager::IsComplete() {
-	return !mThread.joinable();
+	return !_thread.joinable();
 }
 
 ILoadable & LoadManager::GetLoadablesManager(const std::string& extension) {

@@ -21,6 +21,7 @@
 
 #include"Util/RefPtr.h"
 
+
 MyGame::MyGame()
 	: bonelib::Frame()
 	, m_isEnd(false) {}
@@ -55,7 +56,7 @@ void MyGame::start() {
 	shader = new SkinnedMeshShader(*effect1_);
 	stest = new SkinnedMeshShader(*effect2_);
 
-	std::unique_ptr<Player> temp(new Player());	
+	std::unique_ptr<Player> temp(new Player());
 	temp->SetShader(stest);
 	temp->SetPosition({ 3, 0, 0 });
 	ptest = temp.get();
@@ -71,7 +72,7 @@ void MyGame::start() {
 
 	mWorld.AddActor(std::move(uPlayer));
 	mWorld.AddActor(std::move(temp));
-	mWorld.AddActor(std::move(uCamera));	
+	mWorld.AddActor(std::move(uCamera));
 }
 
 void MyGame::update(float deltaTime) {
@@ -79,11 +80,14 @@ void MyGame::update(float deltaTime) {
 	m_SceneManager.Update(deltaTime);
 
 	mWorld.Update(deltaTime);
+
+	float temp = Time::DeltaSec();
 }
 
 void MyGame::draw() {
 	//ƒV[ƒ“•`‰æ
 	m_SceneManager.Draw();
+	//render_string(0, 0, Time::toString());
 
 	/*:::::::::::::::::::::::::::::::::::::*/
 	glClearColor(0.5f, 0.5f, 1.0f, 1.0f);
@@ -108,7 +112,7 @@ void MyGame::draw() {
 	stest->view(view);
 	stest->projection(projection);
 	stest->light(light);
-	
+
 	ptest->TempDraw(world, view, projection, light);
 }
 

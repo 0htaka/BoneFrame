@@ -20,7 +20,7 @@ Input & Input::Ins() {
 
 void Input::RegistFunc() {
 	//シャットダウン
-	commandFunc[(int)Command::ShutDown]
+	commandFunc[static_cast<int>(Command::ShutDown)]
 		= [&](void)->bool
 	{
 		return (mKeys.IsKeyDown(VK_ESCAPE));

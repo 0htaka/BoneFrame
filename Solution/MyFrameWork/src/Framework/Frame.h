@@ -29,9 +29,10 @@ namespace bonelib {
 				Time::Update();
 				Input::Ins().Update();
 				//update(60.0f / fps_);
-				update(Time::DeltaTime());
+				update(Time::DeltaSec());
 				draw();
 				mDevice.swap();
+				Time::Wait();
 			}
 			end();
 			return 0;
